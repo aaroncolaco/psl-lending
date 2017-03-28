@@ -9,21 +9,106 @@ chai.use(chaiHttp);
 const config = require('../config');
 
 const hostURL = config.getURL();
-const apiRootURL = '/api/users';
-const completeURL = hostURL + apiRootURL;
+const apiRootURL = '/api/users/';
+var completeURL = hostURL + apiRootURL;
 
-const allUsersUrl = '/';
+
+const user = {
+  "email": "johndoe@google.com",
+  "ethAccount": "fsdf79873453jkwhr89342",
+  "name": "John Doe"
+};
+
+const updatedUser = {
+  "email": "janedoe@google.com",
+  "ethAccount": "fsdf79873453jkwhr89342",
+  "name": "Jane Doe"
+};
+
 
 describe('User Tests', () => {
-  describe('GET ' + apiRootURL + allUsersUrl, () => {
-    it('response status should be 200', (done) => {
+  describe('POST /users', () => {
+    it('created new user', (done) => {
       chai.request(completeURL)
-        .get(allUsersUrl)
+        .post('/')
+        .send(user)
+        .end((err, res) => {
+          expect(res).to.have.status(201);
+          expect(res).to.be.an('object');
+
+          expect(res.body.email).to.equal(user.email);
+          expect(res.body.ethAccount).to.equal(user.ethAccount);
+          expect(res.body.name).to.equal(user.name);
+
+          completeURL = completeURL + res.body._id;
+          done();
+        });
+    });
+  });
+
+  describe('GET /users/:id', () => {
+    it('read created user', (done) => {
+      chai.request(completeURL)
+        .get('/')
         .end((err, res) => {
           expect(res).to.have.status(200);
+          expect(res).to.be.an('object');
+
+          expect(res.body.email).to.equal(user.email);
+          expect(res.body.ethAccount).to.equal(user.ethAccount);
+          expect(res.body.name).to.equal(user.name);
+
+          done();
+        });
+    });
+  });
+
+  describe('POST /users/:id', () => {
+    it('update created user', (done) => {
+      chai.request(completeURL)
+        .post('/')
+        .send(updatedUser)
+        .end((err, res) => {
+          expect(res).to.have.status(202);
           expect(res).to.be.an('object');
           done();
         });
     });
   });
+
+  describe('GET /users/:id', () => {
+    it('read updated user', (done) => {
+      chai.request(completeURL)
+        .get('/')
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res).to.be.an('object');
+
+          expect(res.body.email).to.equal(updatedUser.email);
+          expect(res.body.ethAccount).to.equal(updatedUser.ethAccount);
+          expect(res.body.name).to.equal(updatedUser.name);
+
+          done();
+        });
+    });
+  });
+
+  describe('DELETE /users/:id', () => {
+    it('delete created user', (done) => {
+      chai.request(completeURL)
+        .delete('/')
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res).to.be.an('object');
+
+          expect(res.body.email).to.equal(updatedUser.email);
+          expect(res.body.ethAccount).to.equal(updatedUser.ethAccount);
+          expect(res.body.name).to.equal(updatedUser.name);
+
+          done();
+        });
+    });
+  });
+
+
 });
