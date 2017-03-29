@@ -15,7 +15,6 @@ var completeURL = hostURL + apiRootURL;
 
 const user = {
   "email": "johndoe@google.com",
-  "ethAccount": "fsdf79873453jkwhr89342",
   "name": "John Doe"
 };
 
@@ -37,7 +36,7 @@ describe('User Tests', () => {
           expect(res).to.be.an('object');
 
           expect(res.body.email).to.equal(user.email);
-          expect(res.body.ethAccount).to.equal(user.ethAccount);
+          expect(res.body.ethAccount).to.equal(undefined);
           expect(res.body.name).to.equal(user.name);
 
           completeURL = completeURL + res.body._id;
@@ -55,7 +54,7 @@ describe('User Tests', () => {
           expect(res).to.be.an('object');
 
           expect(res.body.email).to.equal(user.email);
-          expect(res.body.ethAccount).to.equal(user.ethAccount);
+          expect(res.body.ethAccount).to.equal(undefined);
           expect(res.body.name).to.equal(user.name);
 
           done();

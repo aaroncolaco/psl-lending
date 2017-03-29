@@ -12,6 +12,7 @@ const createUser = (req, res) => {
 
   helpers.createUser(attributes, (err, user) => {
     if (err) {
+      console.log(err);
       return res.status(err.status || 500).json(err);
     }
     res.status(201).json(user);
@@ -26,6 +27,7 @@ const deleteUser = (req, res) => {
 
   helpers.deleteUser(where, (err, user) => {
     if (err) {
+      console.log(err);
       return res.status(err.status || 500).json(err);
     }
     res.status(200).json(user);
@@ -39,6 +41,7 @@ const getUserById = (req, res) => {
 
   helpers.findUser(where, (err, user) => {
     if (err) {
+      console.log(err);
       return res.status(err.status || 500).json(err);
     }
     res.status(200).json(user);
@@ -58,6 +61,7 @@ const updateUser = (req, res) => {
 
   helpers.updateUser(where, attributes, (err, user) => {
     if (err) {
+      console.log(err);
       return res.status(err.status || 500).json(err);
     }
     res.status(202).json(user);

@@ -30,6 +30,7 @@ const deleteDeal = (req, res) => {
 
   helpers.deleteDeal(where, (err, deal) => {
     if (err) {
+      console.log(err);
       return res.status(err.status || 500).json(err);
     }
     res.status(200).json(deal);
@@ -47,6 +48,7 @@ const getDealById = (req, res) => {
 
   helpers.findDeal(where, (err, deal) => {
     if (err) {
+      console.log(err);
       return res.status(err.status || 500).json(err);
     }
     res.status(200).json(deal);
@@ -65,6 +67,7 @@ const updateDeal = (req, res) => {
 
   helpers.updateDeal(where, attributes, (err, deal) => {
     if (err) {
+      console.log(err);
       return res.status(err.status || 500).json(err);
     }
     res.status(202).json(deal);
