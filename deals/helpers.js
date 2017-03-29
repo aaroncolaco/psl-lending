@@ -51,6 +51,11 @@ const updateDeal = (where, attributes, callback) => {
       if (!deal) {
         return callback({"status": 404, "message": "Not found"}, null);
       } else {
+        // append lastest txId to array of txIds
+        const txIds = deal.txIds;
+        txIds.push(attributes.txIds);
+        attributes.txIds = txIds;
+
         deal.update(attributes).then(() => {
          return callback(null, true);
         }, (err) => {

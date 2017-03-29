@@ -9,6 +9,7 @@ const userSchema = new Schema({
     type: String,
     required: [true, '{PATH} is required'],
     trim: true,
+    lowercase: true,
     minlength: [3, 'Text less than 3 char']
   },
   name: {

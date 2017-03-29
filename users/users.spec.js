@@ -30,7 +30,7 @@ describe('User Tests', () => {
   describe('POST /users', () => {
     it('created new user', (done) => {
       chai.request(completeURL)
-        .post('/')
+        .post('')
         .send(user)
         .end((err, res) => {
           expect(res).to.have.status(201);

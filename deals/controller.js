@@ -5,17 +5,17 @@ const helpers = require('./helpers');
 
 const createDeal = (req, res) => {
   const attributes = {
+    ethereumId: req.body.ethereumId,
     lenderId : req.body.lenderId,
     borrowerId : req.body.borrowerId,
-    accepted : req.body.accepted,
-    txIds : req.body.txIds,
-    lenderSig : req.body.lenderSig,
-    borrowerSig : req.body.borrowerSig,
+    status : req.body.status,
+    txIds : req.body.txId,
     textHash : req.body.textHash
   };
 
   helpers.createDeal(attributes, (err, deal) => {
     if (err) {
+      console.log(err);
       return res.status(err.status || 500).json(err);
     }
     res.status(201).json(deal);
@@ -59,7 +59,8 @@ const updateDeal = (req, res) => {
   };
 
   const attributes = {
-    accepted : req.body.accepted,
+    status : req.body.status,
+    txIds: req.body.txId
   };
 
   helpers.updateDeal(where, attributes, (err, deal) => {
