@@ -1,6 +1,7 @@
 'use strict';
 
 const helpers = require('./helpers');
+const notifications = require('../notifications');
 
 
 const createUser = (req, res) => {

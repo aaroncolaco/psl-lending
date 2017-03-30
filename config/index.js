@@ -11,6 +11,9 @@ module.exports = {
   getDbConnectionString: () => {
     return process.env.DB_URL || envtConfig.dbString;
   },
+  getFcmServerKey: () => {
+    return process.env.FCM_SERVER_KEY || envtConfig.fcmServerKey;
+  },
   getStatusMsgs: () => {
     return config.statusMsgs;
   },
