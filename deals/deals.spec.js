@@ -15,8 +15,8 @@ var completeURL = hostURL + apiRootURL;
 
 const deal = {
   "ethereumId": "ethereumId",
-  "lenderId": "lenderId",
-  "borrowerId": "borrowerId",
+  "lenderId": "58dc8871489d286ee66487aa",
+  "borrowerId": "58dc8871489d286ee66487ab",
   "status": "created",
   "txId": "txId",
   "textHash": "textHash"

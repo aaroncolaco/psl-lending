@@ -45,6 +45,40 @@ describe('User Tests', () => {
     });
   });
 
+  describe('GET /users/?name=JohN D', () => {
+    it('search users by name', (done) => {
+      chai.request(hostURL + apiRootURL)
+        .get('?name=JohN D')
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res).to.be.an('object');
+
+          expect(res.body[0].email).to.equal(user.email);
+          expect(res.body[0].ethAccount).to.equal(undefined);
+          expect(res.body[0].name).to.equal(user.name);
+
+          done();
+        });
+    });
+  });
+
+  describe('GET /users/?email=joHn', () => {
+    it('search users by email', (done) => {
+      chai.request(hostURL + apiRootURL)
+        .get('?email=joHn')
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res).to.be.an('object');
+
+          expect(res.body[0].email).to.equal(user.email);
+          expect(res.body[0].ethAccount).to.equal(undefined);
+          expect(res.body[0].name).to.equal(user.name);
+
+          done();
+        });
+    });
+  });
+
   describe('GET /users/:id', () => {
     it('read created user', (done) => {
       chai.request(completeURL)
