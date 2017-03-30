@@ -16,6 +16,7 @@ router.use(function(req, res, next) {
   next();
 });
 
+router.get('/', controller.getUsers); // can pass query params `name` and `email` if needed. to return all users, don't pass anything
 router.get('/:id', controller.getUserById);
 router.post('/', controller.createUser);
 router.post('/:id', controller.updateUser);

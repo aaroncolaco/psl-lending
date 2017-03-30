@@ -43,6 +43,22 @@ const findUser = (where, callback) => {
 };
 
 
+const searchUsers = (limit, where, callback) => {
+  User.find(where)
+    .limit(limit < 100 ? limit:10)  // how many to return
+    .sort({ occupation: 1 })
+    .then((users) => {
+      if (!users) {
+        return callback({"status": 404, "message": "Not found"}, null);
+      };
+      return callback(null, users);
+    })
+    .catch((err) => {
+      return callback({"status": 500, "error": err}, null);
+    });
+};
+
+
 const updateUser = (where, attributes, callback) => {
   const id = where.id;
 
@@ -70,5 +86,6 @@ module.exports = {
   createUser,
   deleteUser,
   findUser,
+  searchUsers,
   updateUser
 };

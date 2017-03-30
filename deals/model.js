@@ -12,16 +12,12 @@ const dealSchema = new Schema({
     minlength: [5, 'Text less than 5 char']
   },
   lenderId: {
-    type: String,
-    required: [true, '{PATH} is required'],
-    trim: true,
-    minlength: [3, 'Text less than 3 char']
+    type: mongoose.Schema.Types.ObjectId,
+    required: true
   },
   borrowerId: {
-    type: String,
-    required: [true, '{PATH} is required'],
-    trim: true,
-    minlength: [2, 'Text less than 2 char']
+    type: mongoose.Schema.Types.ObjectId,
+    required: true
   },
   status: {
     type: String,
