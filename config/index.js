@@ -3,6 +3,7 @@
 const config = require('./config');
 const env = process.env.NODE_ENV || 'development';
 const envtConfig = config[env]; // env specific values
+const firebaseServiceAccount = require('./firebase-admin');
 
 module.exports = {
   getEnv: () => {
@@ -13,6 +14,9 @@ module.exports = {
   },
   getFcmServerKey: () => {
     return process.env.FCM_SERVER_KEY || envtConfig.fcmServerKey;
+  },
+  getFirebaseServiceAccount: () => {
+    return firebaseServiceAccount
   },
   getStatusMsgs: () => {
     return config.statusMsgs;

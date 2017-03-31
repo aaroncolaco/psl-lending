@@ -15,12 +15,14 @@ var completeURL = hostURL + apiRootURL;
 
 const user = {
   "email": "johndoe@google.com",
+  "firebaseToken": "ashfuidghf23784r698x7wmydr79q23465r39xnyce9xnr72346yr72cy9weyrn23479r234890",
   "name": "John Doe"
 };
 
 const updatedUser = {
   "email": "janedoe@google.com",
   "ethAccount": "fsdf79873453jkwhr89342",
+  "firebaseToken": "ashfuidghf23784r698x3534895dsdgfsdg6556df4gdf1346yr72cy9weyrn23479r2348rwee",
   "name": "Jane Doe"
 };
 
@@ -37,6 +39,7 @@ describe('User Tests', () => {
 
           expect(res.body.email).to.equal(user.email);
           expect(res.body.ethAccount).to.equal(undefined);
+          expect(res.body.firebaseToken).to.equal(user.firebaseToken);
           expect(res.body.name).to.equal(user.name);
 
           completeURL = completeURL + res.body._id;
@@ -55,6 +58,7 @@ describe('User Tests', () => {
 
           expect(res.body[0].email).to.equal(user.email);
           expect(res.body[0].ethAccount).to.equal(undefined);
+          expect(res.body[0].firebaseToken).to.equal(user.firebaseToken);
           expect(res.body[0].name).to.equal(user.name);
 
           done();
@@ -72,6 +76,7 @@ describe('User Tests', () => {
 
           expect(res.body[0].email).to.equal(user.email);
           expect(res.body[0].ethAccount).to.equal(undefined);
+          expect(res.body[0].firebaseToken).to.equal(user.firebaseToken);
           expect(res.body[0].name).to.equal(user.name);
 
           done();
@@ -89,6 +94,7 @@ describe('User Tests', () => {
 
           expect(res.body.email).to.equal(user.email);
           expect(res.body.ethAccount).to.equal(undefined);
+          expect(res.body.firebaseToken).to.equal(user.firebaseToken);
           expect(res.body.name).to.equal(user.name);
 
           done();
@@ -119,6 +125,7 @@ describe('User Tests', () => {
 
           expect(res.body.email).to.equal(updatedUser.email);
           expect(res.body.ethAccount).to.equal(updatedUser.ethAccount);
+          expect(res.body.firebaseToken).to.equal(updatedUser.firebaseToken);
           expect(res.body.name).to.equal(updatedUser.name);
 
           done();
@@ -136,6 +143,7 @@ describe('User Tests', () => {
 
           expect(res.body.email).to.equal(updatedUser.email);
           expect(res.body.ethAccount).to.equal(updatedUser.ethAccount);
+          expect(res.body.firebaseToken).to.equal(updatedUser.firebaseToken);
           expect(res.body.name).to.equal(updatedUser.name);
 
           done();

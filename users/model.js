@@ -12,6 +12,11 @@ const userSchema = new Schema({
     lowercase: true,
     minlength: [3, 'Text less than 3 char']
   },
+  firebaseToken: {
+    type: String,
+    required: [true, '{PATH} is required'],
+    trim: true
+  },
   name: {
     type: String,
     required: [true, '{PATH} is required'],

@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "resource-lending",
+  "private_key_id": "f745f8144ba737c1793fafac6b577739c07ead5e",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDTqpnkqyQu3U9B\n5wkwzc5HlAS+ayYPPevrGhO29s52W4azv4S7mwCDRXtWV4hOl2H+V/i27N9Aje7q\nwNK0fbd2P/zdRX8qj1D3RXH1u8HKqF0G9krmi4g4KOlgsiPE5o44OH3nCDP2ovrt\nxSCHbuj/oMGFQk+bt6LGY4FIwZqRScJtY/BHotOVi6FzbYCTvq8M6cyCqylEck35\nPyQaFIWumdKuSzJdeD9dsQpoQZrwMOUKd8t4HAI//mnoUzm6OFb0BqQ2WqrwpSMc\nFI/DYQV6KIDHHDCL7qq/pidLJjfeQj6YaEvWUtLA8a12xmDe4JyaIFO6BQc4VEpo\nBqlAAfiHAgMBAAECggEAEiG1GR+H8/PFTFHsOaAHoZ4OYflvwzJ8uSD8u1mdCgqB\nGXi4eBGpE5WqIRVSedkB7fW/OnxEC5Wc98MYyZlTU+/bS2EeqZipSOVMA87XpPKT\nNXt3oxQk0RrAEyZvZfiSCkLcliPfv6rqb9/JD5DyqKMusKmjhCVQ7kmr032yLevJ\ntyBz50g9RL2G7sjQqTOKAEN6QpXXszWt1+IIQykCMcEXzfTOEMENtuzVk+qq8LVV\nHm9y40XONcDA7xaERZr2chocrFku3/Wl5SJZOscgKnRO1lGMjVdfP3azdd0tBFkR\nDYV9/4nU0T9YW7H8LDP1mRcXFgePhrzi57IJZgQNAQKBgQDsaVXyNVh8cVrYtJQc\ntctQmcT3Tik0SZoudFJOz7SAEnrM30bceRUij9jBt2PWBnxq0NoQMSTXDUnubQpH\nSxlqPc/AfT4yQpCW9ZN2fAG29CU9sLIB0QQjkcIY4e3ZJIfRrn1J6jWgW2+iGSCX\n3RZNHl2UTkwR8cm9mP2FcTz6QQKBgQDlNGIfpTU/ecqniMdbkSaRn08I6bfvRwZn\nrcnlj6ErJlKSNa5VF2iQLHxsCt67uuga1wCfs6UcoEi+P2QnaoElNSPibN/EamK2\nheOUKnIND4WHXkNh8bsrB1C5qPC8xma7C7qCveIVKcOithi0NGaLz3OT3feiFkb8\nmBcLLl9wxwKBgA3Ka0AQypOfzSvdBNLT7ANMpQfEIHUzYfIZyP9d8GqUKWOwFqMf\n0RLOD1flicZfZHyaqE3PgBWnaculwra788SVzHuvEqS9609TDgIYY8U3YsDBgPDI\nL5SfmRH4g/Zpwh6CLj7UkcJD8zQigRs6w2VGQzE2jAtz7k/ID+nr3CHBAoGBAKUr\nIYbCa+PJJWOjal4u9Ec+MRswKU8xtIjkMLjPzwmkPR6FtpI1IzG6DRNipe1MnFQz\nGYz8TQCa9LC8R7Urx9MDP0+8u2f0bhwv0bcE+1k0FTpekFo1c3ZneCHCf3DZ3E/v\n/MCYiyJLDWLkrFq35CneHeCxtPDF8vO1ue1hxn8jAoGBANT3Bad18VQzsGrkE8aq\nHZC8lsjci95Tbj4AOM7fe7+3PUsAv9uMKoji/4oLXd0v3jxQ8yeLwlfO7bUmeW5W\n7mtin5vOLxEoihrDAPP5qAZ88bctAOAoFXvkSIxZOea3uCgguqZJZPEs1GqPvcY5\nMbZEByj6AUMSqhjqDfrEnRrG\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-y9ci7@resource-lending.iam.gserviceaccount.com",
+  "client_id": "106983253455430529599",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-y9ci7%40resource-lending.iam.gserviceaccount.com"
+}
