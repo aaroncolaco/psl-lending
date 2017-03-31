@@ -21,7 +21,7 @@ const dealSchema = new Schema({
   },
   status: {
     type: String,
-    enum: ['created', 'accepted', 'rejected', 'closed'],
+    enum: ['created', 'accepted', 'rejected', 'initiateSettlement', 'closed'],
     default: 'created',
     required: [true, '{PATH} is required'],
     trim: true

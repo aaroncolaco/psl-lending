@@ -2,14 +2,18 @@
 
 
 const Web3 = require('web3');
+const config = require('../config');
+const lib = require('./lib');
+const userHelpers = ('../users/helpers');
+
 const web3 = new Web3();
 
 web3.setProvider(new web3.providers.HttpProvider('http://10.51.229.126:8545'));
 
 
-const ABI = [{"constant":false,"inputs":[{"name":"deal_id","type":"string"},{"name":"data","type":"string"}],"name":"acceptSettleDeal","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"borrower","type":"address"},{"name":"data","type":"string"},{"name":"deal_id","type":"string"}],"name":"createDeal","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"deal_id","type":"string"},{"name":"data","type":"string"}],"name":"acceptDeal","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"deal_id","type":"string"},{"name":"data","type":"string"}],"name":"settleDeal","outputs":[],"payable":false,"type":"function"},{"anonymous":false,"inputs":[{"indexed":false,"name":"lender","type":"address"},{"indexed":false,"name":"borrower","type":"address"},{"indexed":false,"name":"data","type":"string"},{"indexed":false,"name":"deal_id","type":"string"}],"name":"createDealEvent","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"deal_id","type":"string"},{"indexed":false,"name":"data","type":"string"}],"name":"acceptDealEvent","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"deal_id","type":"string"},{"indexed":false,"name":"data","type":"string"}],"name":"settleDealEvent","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"deal_id","type":"string"},{"indexed":false,"name":"data","type":"string"}],"name":"acceptSettleDealEvent","type":"event"}];
+const ABI = [{"constant":false,"inputs":[{"name":"deal_id","type":"string"},{"name":"data","type":"string"}],"name":"acceptSettleDeal","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"counterparty","type":"address"},{"name":"data","type":"string"},{"name":"deal_id","type":"string"}],"name":"createDeal","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"deal_id","type":"string"},{"name":"data","type":"string"}],"name":"acceptDeal","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"deal_id","type":"string"},{"name":"data","type":"string"}],"name":"settleDeal","outputs":[],"payable":false,"type":"function"},{"anonymous":false,"inputs":[{"indexed":false,"name":"lender","type":"address"},{"indexed":false,"name":"borrower","type":"address"},{"indexed":false,"name":"data","type":"string"},{"indexed":false,"name":"deal_id","type":"string"}],"name":"createDealEvent","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"deal_id","type":"string"},{"indexed":false,"name":"data","type":"string"}],"name":"acceptDealEvent","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"deal_id","type":"string"},{"indexed":false,"name":"data","type":"string"}],"name":"settleDealEvent","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"deal_id","type":"string"},{"indexed":false,"name":"data","type":"string"}],"name":"acceptSettleDealEvent","type":"event"}];
 
-const blockchainContract = web3.eth.contract(ABI).at("0x8a48289e41651d080e54e0d91fc422c12b13aeb7");
+const blockchainContract = web3.eth.contract(ABI).at("0xa4053e29f8ac97d9edf8c36cb6d85ab893b896e9");
 
 console.log(blockchainContract);
 
@@ -20,7 +24,45 @@ const createDealEvent = blockchainContract.createDealEvent((error, result) => {
     console.log(JSON.stringify(result.args) + "\n");
   } else {
     console.log(error);
+    return;
   }
+
+  const ethereumId = result.args.deal_id;
+  const txId = result.transactionHash;
+
+  const data = JSON.parse(result.args.data);
+  const lenderId = data.lenderId;
+  const borrowerId = data.borrowerId;
+  const status = 'created';
+  const textHash = data.hash;
+
+  const attributes = {
+    ethereumId,
+    lenderId,
+    borrowerId,
+    status,
+    txId,
+    textHash
+  };
+
+  // create deal in DB
+  request.post(config.getURL() + '/api/deals').form(attributes);
+  // send notification
+    // get user's firebase id from db to post to
+  // commenting bottom part out because not passing valid userID from frontend at the moment
+  /*const where = {
+    _id: attributes.borrowerId
+  };
+  let to = null;
+
+  userHelpers.findUser(where, (err, user) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    to = user.firebaseToken;
+    lib.notify(to, {data: result});l
+  });*/
 });
 
 const acceptDealEvent = blockchainContract.acceptDealEvent((error, result) => {
