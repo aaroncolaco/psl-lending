@@ -17,13 +17,13 @@ const notify = (to, data) => {
   };
 
   admin.messaging().sendToDevice(to, notification)
-    .then(function(response) {
+    .then((response) => {
       // See the MessagingDevicesResponse reference documentation for
       // the contents of response.
       console.log("Successfully sent message:", response);
     })
-    .catch(function(error) {
-      console.log("Error sending message:", error);
+    .catch((error) => {
+      console.error("Error sending message:", error);
     });
 };
 
