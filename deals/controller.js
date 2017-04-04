@@ -10,8 +10,7 @@ const createDeal = (req, res) => {
     lenderId : req.body.lenderId,
     borrowerId : req.body.borrowerId,
     status : req.body.status,
-    txIds : req.body.txId,
-    textHash : req.body.textHash
+    txIds : req.body.txId
   };
 
   helpers.createDeal(attributes, (err, deal) => {

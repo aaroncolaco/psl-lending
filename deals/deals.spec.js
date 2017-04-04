@@ -18,8 +18,7 @@ const deal = {
   "lenderId": "58dc8871489d286ee66487aa",
   "borrowerId": "58dc8871489d286ee66487ab",
   "status": "created",
-  "txId": "txId",
-  "textHash": "textHash"
+  "txId": "txId"
 };
 
 const updatedDeal = {
@@ -43,7 +42,6 @@ describe('Deal Tests', () => {
           expect(res.body.borrowerId).to.equal(deal.borrowerId);
           expect(res.body.status).to.equal(deal.status);
           expect(res.body.txIds[0]).to.equal(deal.txId);
-          expect(res.body.textHash).to.equal(deal.textHash);
 
           completeURL = completeURL + res.body._id;
           done();
@@ -64,7 +62,6 @@ describe('Deal Tests', () => {
           expect(res.body.borrowerId).to.equal(deal.borrowerId);
           expect(res.body.status).to.equal(deal.status);
           expect(res.body.txIds[0]).to.equal(deal.txId);
-          expect(res.body.textHash).to.equal(deal.textHash);
 
           done();
         });
@@ -84,7 +81,6 @@ describe('Deal Tests', () => {
           expect(res.body[0].borrowerId).to.equal(deal.borrowerId);
           expect(res.body[0].status).to.equal(deal.status);
           expect(res.body[0].txIds[0]).to.equal(deal.txId);
-          expect(res.body[0].textHash).to.equal(deal.textHash);
 
           done();
         });
@@ -104,7 +100,6 @@ describe('Deal Tests', () => {
           expect(res.body[0].borrowerId).to.equal(deal.borrowerId);
           expect(res.body[0].status).to.equal(deal.status);
           expect(res.body[0].txIds[0]).to.equal(deal.txId);
-          expect(res.body[0].textHash).to.equal(deal.textHash);
 
           done();
         });
@@ -138,7 +133,6 @@ describe('Deal Tests', () => {
           expect(res.body.status).to.equal(updatedDeal.status);
           expect(res.body.txIds[0]).to.deep.equal(deal.txId);
           expect(res.body.txIds[1]).to.deep.equal(updatedDeal.txId);
-          expect(res.body.textHash).to.equal(deal.textHash);
 
           done();
         });
@@ -159,7 +153,6 @@ describe('Deal Tests', () => {
           expect(res.body[0].status).to.equal(updatedDeal.status);
           expect(res.body[0].txIds[0]).to.equal(deal.txId);
           expect(res.body[0].txIds[1]).to.deep.equal(updatedDeal.txId);
-          expect(res.body[0].textHash).to.equal(deal.textHash);
 
           done();
         });
@@ -180,7 +173,6 @@ describe('Deal Tests', () => {
           expect(res.body[0].status).to.equal(updatedDeal.status);
           expect(res.body[0].txIds[0]).to.equal(deal.txId);
           expect(res.body[0].txIds[1]).to.deep.equal(updatedDeal.txId);
-          expect(res.body[0].textHash).to.equal(deal.textHash);
 
           done();
         });
@@ -201,7 +193,6 @@ describe('Deal Tests', () => {
           expect(res.body.status).to.equal(updatedDeal.status);
           expect(res.body.txIds[0]).to.deep.equal(deal.txId);
           expect(res.body.txIds[1]).to.deep.equal(updatedDeal.txId);
-          expect(res.body.textHash).to.equal(deal.textHash);
 
           done();
         });
