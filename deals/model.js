@@ -12,11 +12,11 @@ const dealSchema = new Schema({
     minlength: [5, 'Text less than 5 char']
   },
   lenderId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     required: true
   },
   borrowerId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     required: true
   },
   status: {
