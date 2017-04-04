@@ -71,6 +71,46 @@ describe('Deal Tests', () => {
     });
   });
 
+  describe('GET /deals/?lenderId=58dc8871489d286ee66487aa', () => {
+    it('search deals by lenderId', (done) => {
+      chai.request(hostURL + apiRootURL)
+        .get('?lenderId=58dc8871489d286ee66487aa')
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res).to.be.an('object');
+
+          expect(res.body[0].lenderId).to.equal(deal.lenderId);
+          expect(res.body[0].ethereumId).to.equal(deal.ethereumId);
+          expect(res.body[0].borrowerId).to.equal(deal.borrowerId);
+          expect(res.body[0].status).to.equal(deal.status);
+          expect(res.body[0].txIds[0]).to.equal(deal.txId);
+          expect(res.body[0].textHash).to.equal(deal.textHash);
+
+          done();
+        });
+    });
+  });
+
+  describe('GET /deals/?borrowerId=58dc8871489d286ee66487ab', () => {
+    it('search deals by borrowerId', (done) => {
+      chai.request(hostURL + apiRootURL)
+        .get('?borrowerId=58dc8871489d286ee66487ab')
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res).to.be.an('object');
+
+          expect(res.body[0].lenderId).to.equal(deal.lenderId);
+          expect(res.body[0].ethereumId).to.equal(deal.ethereumId);
+          expect(res.body[0].borrowerId).to.equal(deal.borrowerId);
+          expect(res.body[0].status).to.equal(deal.status);
+          expect(res.body[0].txIds[0]).to.equal(deal.txId);
+          expect(res.body[0].textHash).to.equal(deal.textHash);
+
+          done();
+        });
+    });
+  });
+
   describe('POST /deals/:id', () => {
     it('update created deal', (done) => {
       chai.request(completeURL)
@@ -99,6 +139,48 @@ describe('Deal Tests', () => {
           expect(res.body.txIds[0]).to.deep.equal(deal.txId);
           expect(res.body.txIds[1]).to.deep.equal(updatedDeal.txId);
           expect(res.body.textHash).to.equal(deal.textHash);
+
+          done();
+        });
+    });
+  });
+
+  describe('GET /deals/?lenderId=58dc8871489d286ee66487aa', () => {
+    it('search deals by lenderId', (done) => {
+      chai.request(hostURL + apiRootURL)
+        .get('?lenderId=58dc8871489d286ee66487aa')
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res).to.be.an('object');
+
+          expect(res.body[0].lenderId).to.equal(deal.lenderId);
+          expect(res.body[0].ethereumId).to.equal(deal.ethereumId);
+          expect(res.body[0].borrowerId).to.equal(deal.borrowerId);
+          expect(res.body[0].status).to.equal(updatedDeal.status);
+          expect(res.body[0].txIds[0]).to.equal(deal.txId);
+          expect(res.body[0].txIds[1]).to.deep.equal(updatedDeal.txId);
+          expect(res.body[0].textHash).to.equal(deal.textHash);
+
+          done();
+        });
+    });
+  });
+
+  describe('GET /deals/?borrowerId=58dc8871489d286ee66487ab', () => {
+    it('search deals by borrowerId', (done) => {
+      chai.request(hostURL + apiRootURL)
+        .get('?borrowerId=58dc8871489d286ee66487ab')
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res).to.be.an('object');
+
+          expect(res.body[0].lenderId).to.equal(deal.lenderId);
+          expect(res.body[0].ethereumId).to.equal(deal.ethereumId);
+          expect(res.body[0].borrowerId).to.equal(deal.borrowerId);
+          expect(res.body[0].status).to.equal(updatedDeal.status);
+          expect(res.body[0].txIds[0]).to.equal(deal.txId);
+          expect(res.body[0].txIds[1]).to.deep.equal(updatedDeal.txId);
+          expect(res.body[0].textHash).to.equal(deal.textHash);
 
           done();
         });

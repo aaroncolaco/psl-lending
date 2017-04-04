@@ -46,7 +46,7 @@ const findUser = (where, callback) => {
 const searchUsers = (limit, where, callback) => {
   User.find(where)
     .limit(limit < 100 ? limit:10)  // how many to return
-    .sort({ occupation: 1 })
+    .sort({ name: 1 })
     .then((users) => {
       if (!users) {
         return callback({"status": 404, "message": "Not found"}, null);

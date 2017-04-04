@@ -42,6 +42,21 @@ const findDeal = (where, callback) => {
     });
 };
 
+const searchDeals = (limit, where, callback) => {
+  Deal.find(where)
+    .limit(limit < 100 ? limit:10)  // how many to return
+    .sort({ status: 1 })
+    .then((deals) => {
+      if (!deals) {
+        return callback({"status": 404, "message": "Not found"}, null);
+      };
+      return callback(null, deals);
+    })
+    .catch((err) => {
+      return callback({"status": 500, "error": err}, null);
+    });
+};
+
 
 const updateDeal = (where, attributes, callback) => {
   const id = where.id;
@@ -75,5 +90,6 @@ module.exports = {
   createDeal,
   deleteDeal,
   findDeal,
+  searchDeals,
   updateDeal
 };

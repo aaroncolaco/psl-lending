@@ -1,5 +1,6 @@
 'use strict';
 
+const _ = require('lodash');
 const helpers = require('./helpers');
 
 
@@ -38,7 +39,28 @@ const deleteDeal = (req, res) => {
 };
 
 const getAllDeals = (req, res) => {
-  return res.json({"message": "Return all deals"});
+
+  const query = req.query;
+  const where = {};
+  let limit = 10;
+
+  if (query.hasOwnProperty('lenderId') && _.isString(query.lenderId)) {
+    where.lenderId = query.lenderId;
+  };
+  if (query.hasOwnProperty('borrowerId') && _.isString(query.borrowerId)) {
+    where.borrowerId = query.borrowerId;
+  };
+  if (query.hasOwnProperty('limit') && _.isInteger(query.limit)) {
+    limit = query.limit;
+  };
+
+  helpers.searchDeals(limit, where, (err, users) => {
+    if (err) {
+      console.log(err);
+      return res.status(err.status || 500).json(err);
+    }
+    res.status(200).json(users);
+  });
 };
 
 const getDealById = (req, res) => {
