@@ -57,6 +57,9 @@ const getUsers = (req, res) => {
   const where = {};
   let limit = 10;
 
+  if (query.hasOwnProperty('ethAccount') && _.isString(query.ethAccount)) {
+    where.ethAccount = new RegExp(query.ethAccount.trim(), 'i');
+  };
   if (query.hasOwnProperty('name') && _.isString(query.name)) {
     where.name = new RegExp(query.name.trim(), 'i');
   };

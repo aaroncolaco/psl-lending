@@ -13,9 +13,9 @@ const web3 = new Web3();
 web3.setProvider(new web3.providers.HttpProvider('http://10.51.229.126:8545'));
 
 
-const ABI = [{"constant":false,"inputs":[{"name":"counterparty","type":"address"},{"name":"deal_id","type":"string"},{"name":"data","type":"string"}],"name":"acceptSettleDeal","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"counterparty","type":"address"},{"name":"data","type":"string"},{"name":"deal_id","type":"string"}],"name":"createDeal","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"counterparty","type":"address"},{"name":"deal_id","type":"string"},{"name":"data","type":"string"}],"name":"acceptDeal","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"counterparty","type":"address"},{"name":"deal_id","type":"string"},{"name":"data","type":"string"}],"name":"settleDeal","outputs":[],"payable":false,"type":"function"},{"anonymous":false,"inputs":[{"indexed":false,"name":"lender","type":"address"},{"indexed":false,"name":"borrower","type":"address"},{"indexed":false,"name":"data","type":"string"},{"indexed":false,"name":"deal_id","type":"string"}],"name":"createDealEvent","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"lender","type":"address"},{"indexed":false,"name":"borrower","type":"address"},{"indexed":false,"name":"deal_id","type":"string"},{"indexed":false,"name":"data","type":"string"}],"name":"acceptDealEvent","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"lender","type":"address"},{"indexed":false,"name":"borrower","type":"address"},{"indexed":false,"name":"deal_id","type":"string"},{"indexed":false,"name":"data","type":"string"}],"name":"settleDealEvent","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"lender","type":"address"},{"indexed":false,"name":"borrower","type":"address"},{"indexed":false,"name":"deal_id","type":"string"},{"indexed":false,"name":"data","type":"string"}],"name":"acceptSettleDealEvent","type":"event"}];
+const ABI = [{"constant":false,"inputs":[{"name":"deal_id","type":"string"},{"name":"data","type":"string"}],"name":"acceptSettleDeal","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"counterparty","type":"address"},{"name":"data","type":"string"},{"name":"deal_id","type":"string"}],"name":"createDeal","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"deal_id","type":"string"},{"name":"data","type":"string"}],"name":"acceptDeal","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"deal_id","type":"string"},{"name":"data","type":"string"}],"name":"settleDeal","outputs":[],"payable":false,"type":"function"},{"anonymous":false,"inputs":[{"indexed":false,"name":"lender","type":"address"},{"indexed":false,"name":"borrower","type":"address"},{"indexed":false,"name":"data","type":"string"},{"indexed":true,"name":"deal_id","type":"string"}],"name":"createDealEvent","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"deal_id","type":"string"},{"indexed":false,"name":"data","type":"string"}],"name":"acceptDealEvent","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"deal_id","type":"string"},{"indexed":false,"name":"data","type":"string"}],"name":"settleDealEvent","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"deal_id","type":"string"},{"indexed":false,"name":"data","type":"string"}],"name":"acceptSettleDealEvent","type":"event"}];
 
-const blockchainContract = web3.eth.contract(ABI).at("0x851a0785e9176714f956b2f569ad7d8591706667");
+const blockchainContract = web3.eth.contract(ABI).at("0x04c7925de59181b474edaa7bcf59c9bc8626308a");
 
 const createDealEvent = blockchainContract.createDealEvent((error, result) => {
   if (!error) {
@@ -23,8 +23,7 @@ const createDealEvent = blockchainContract.createDealEvent((error, result) => {
     console.log(JSON.stringify(result) + "\n");
     console.log(JSON.stringify(result.args) + "\n");
   } else {
-    console.log(error);
-    return;
+    console.error(error);
   }
 
   const ethereumId = result.args.deal_id;
@@ -56,12 +55,11 @@ const createDealEvent = blockchainContract.createDealEvent((error, result) => {
 
   userHelpers.findUser(where, (err, user) => {
     if (err) {
-      console.log(err);
-      return;
-    }
-    to = user.firebaseToken;
-    lib.notify(to, {data: result});
-    return;
+      console.error(err);
+    } else {
+      to = user.firebaseToken;
+      lib.notify(to, {data: result});
+    };
   });
 });
 
@@ -71,7 +69,7 @@ const acceptDealEvent = blockchainContract.acceptDealEvent((error, result) => {
     console.log(JSON.stringify(result) + "\n");
     console.log(JSON.stringify(result.args) + "\n");
   } else {
-    console.log(error);
+    console.error(error);
   }
 
   const ethereumId = result.args.deal_id;
@@ -101,12 +99,11 @@ const acceptDealEvent = blockchainContract.acceptDealEvent((error, result) => {
 
   userHelpers.findUser(where, (err, user) => {
     if (err) {
-      console.log(err);
-      return;
-    }
-    to = user.firebaseToken;
-    lib.notify(to, {data: result});
-    return;
+      console.error(err);
+    } else {
+      to = user.firebaseToken;
+      lib.notify(to, {data: result});
+    };
   });
 
 });
