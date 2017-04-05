@@ -46,7 +46,7 @@ const createDealEvent = blockchainContract.createDealEvent((error, result) => {
   // send notification
     // get borrower's firebase id from db to post to
   const where = {
-    ethAccount: attributes.lenderId
+    ethAccount: attributes.borrowerId
   };
   let to = null;
 
