@@ -1,5 +1,6 @@
 'use strict';
 
+const fs = require('fs');
 const request = require('request');
 const Web3 = require('web3');
 
@@ -10,54 +11,54 @@ const userHelpers = require('../users/helpers');
 
 const web3 = new Web3();
 
-web3.setProvider(new web3.providers.HttpProvider('http://10.51.229.126:8545'));
+web3.setProvider(new web3.providers.HttpProvider(config.getGethUrl()));
 
+const ABI = fs.readFileSync(__dirname + "/ABI.txt", "utf8").trim();
+const address = fs.readFileSync(__dirname + "/contractAddress.txt", "utf8").trim();
 
-const ABI = [{"constant":false,"inputs":[{"name":"deal_id","type":"string"},{"name":"data","type":"bytes32"}],"name":"settleDeal","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"deal_id","type":"string"},{"name":"data","type":"bytes32"}],"name":"acceptDeal","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"counterparty","type":"address"},{"name":"data","type":"string"},{"name":"deal_id","type":"bytes32"}],"name":"createDeal","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"deal_id","type":"string"},{"name":"data","type":"bytes32"}],"name":"acceptSettleDeal","outputs":[],"payable":false,"type":"function"},{"anonymous":false,"inputs":[{"indexed":false,"name":"lender","type":"address"},{"indexed":false,"name":"borrower","type":"address"},{"indexed":false,"name":"data","type":"string"},{"indexed":true,"name":"deal_id","type":"bytes32"}],"name":"createDealEvent","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"deal_id","type":"string"},{"indexed":false,"name":"data","type":"bytes32"}],"name":"acceptDealEvent","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"deal_id","type":"string"},{"indexed":false,"name":"data","type":"bytes32"}],"name":"settleDealEvent","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"deal_id","type":"string"},{"indexed":false,"name":"data","type":"bytes32"}],"name":"acceptSettleDealEvent","type":"event"}];
-
-const blockchainContract = web3.eth.contract(ABI).at("0x04d1f33a1db14094ecf0985b1289d488c0c01c38");
+const blockchainContract = web3.eth.contract(JSON.parse(ABI)).at(address.trim());
 
 const createDealEvent = blockchainContract.createDealEvent((error, result) => {
   if (!error) {
-    console.log(result + "\n");
     console.log(JSON.stringify(result) + "\n");
     console.log(JSON.stringify(result.args) + "\n");
+
+    const ethereumId = result.args.deal_id;
+    const borrowerId = result.args.borrower.replace('0x', ''); // remove `0x` from the start of the string
+    const lenderId = result.args.lender.replace('0x', ''); // remove `0x` from the start of the string
+    const txId = result.transactionHash;
+
+    const status = 'created';
+
+    const attributes = {
+      ethereumId,
+      lenderId,
+      borrowerId,
+      status,
+      txId,
+    };
+
+    // create deal in DB
+    request.post(config.getURL() + '/api/deals').form(attributes);
+    // send notification
+      // get borrower's firebase id from db to post to
+    const where = {
+      ethAccount: attributes.borrowerId
+    };
+    let to = null;
+
+    userHelpers.findUser(where, (err, user) => {
+      if (err) {
+        console.error(err);
+      } else {
+        to = user.firebaseToken;
+        lib.notify(to, {data: result});
+      };
+    });
+
   } else {
     console.error(error);
   }
-
-  const ethereumId = result.args.deal_id;
-  const txId = result.transactionHash;
-  const lenderId = result.lender;
-  const borrowerId = result.borrower;
-
-  const status = 'created';
-
-  const attributes = {
-    ethereumId,
-    lenderId,
-    borrowerId,
-    status,
-    txId,
-  };
-
-  // create deal in DB
-  request.post(config.getURL() + '/api/deals').form(attributes);
-  // send notification
-    // get borrower's firebase id from db to post to
-  const where = {
-    ethAccount: attributes.borrowerId
-  };
-  let to = null;
-
-  userHelpers.findUser(where, (err, user) => {
-    if (err) {
-      console.error(err);
-    } else {
-      to = user.firebaseToken;
-      lib.notify(to, {data: result});
-    };
-  });
 });
 
 const acceptDealEvent = blockchainContract.acceptDealEvent((error, result) => {

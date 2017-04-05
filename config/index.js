@@ -15,6 +15,9 @@ module.exports = {
   getFcmServerKey: () => {
     return process.env.FCM_SERVER_KEY || envtConfig.fcmServerKey;
   },
+  getGethUrl: () => {
+    return process.env.GETH_URL || envtConfig.gethUrl;
+  },
   getFirebaseServiceAccount: () => {
     return firebaseServiceAccount
   },
