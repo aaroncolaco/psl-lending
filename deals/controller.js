@@ -43,6 +43,9 @@ const getAllDeals = (req, res) => {
   const where = {};
   let limit = 10;
 
+  if (query.hasOwnProperty('ethereumId') && _.isString(query.ethereumId)) {
+    where.ethereumId = query.ethereumId;
+  };
   if (query.hasOwnProperty('lenderId') && _.isString(query.lenderId)) {
     where.lenderId = query.lenderId;
   };
