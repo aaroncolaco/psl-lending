@@ -23,7 +23,7 @@ const createDealEvent = blockchainContract.createDealEvent((error, result) => {
     console.log(JSON.stringify(result) + "\n");
     console.log(JSON.stringify(result.args) + "\n");
 
-    const ethereumId = result.args.deal_id;
+    const ethereumId = result.args.deal_id.toString();
     const borrowerId = result.args.borrower.replace('0x', ''); // remove `0x` from the start of the string
     const lenderId = result.args.lender.replace('0x', ''); // remove `0x` from the start of the string
     const txId = result.transactionHash;
@@ -37,7 +37,7 @@ const createDealEvent = blockchainContract.createDealEvent((error, result) => {
       status,
       txId,
     };
-
+    console.log("\n\n", attributes, "\n\n");
     // create deal in DB
     request.post(config.getURL() + '/api/deals').form(attributes);
     // send notification
