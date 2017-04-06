@@ -52,7 +52,7 @@ const createDealEvent = blockchainContract.createDealEvent((error, result) => {
         console.error(err);
       } else {
         to = user.firebaseToken;
-        lib.notify(to, {data: result});
+        lib.notify(to, {data: result.args});
       };
     });
 
@@ -86,6 +86,7 @@ const acceptDealEvent = blockchainContract.acceptDealEvent((error, result) => {
       if (err) {
         console.error(err);
       } else {
+        body = JSON.parse(body);
         const id = body[0]._id;
         request.post(config.getURL() + '/api/deals/' + id).form(attributes);
 
@@ -100,7 +101,7 @@ const acceptDealEvent = blockchainContract.acceptDealEvent((error, result) => {
             console.error(err);
           } else {
             to = user.firebaseToken;
-            lib.notify(to, {data: result});
+            lib.notify(to, {data: result.args});
           };
         });
       }
