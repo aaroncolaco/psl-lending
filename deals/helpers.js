@@ -43,7 +43,7 @@ const findDeal = (where, callback) => {
 };
 
 const searchDeals = (limit, where, callback) => {
-  limit = limit > 100 ? 100:limit;
+  limit = limit >= 100 ? 100:limit;
   limit = limit < 1 ? 10:limit; // to stop negatives
   Deal.find(where)
     .limit(limit)  // how many to return
