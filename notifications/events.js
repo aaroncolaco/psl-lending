@@ -88,22 +88,22 @@ const acceptDealEvent = blockchainContract.acceptDealEvent((error, result) => {
       } else {
         const id = body[0]._id;
         request.post(config.getURL() + '/api/deals/' + id).form(attributes);
+
+        // notify user
+        const where = {
+          ethAccount: lenderId
+        };
+        let to = null;
+
+        userHelpers.findUser(where, (err, user) => {
+          if (err) {
+            console.error(err);
+          } else {
+            to = user.firebaseToken;
+            lib.notify(to, {data: result});
+          };
+        });
       }
-    });
-
-    // notify user
-    const where = {
-      ethAccount: lenderId
-    };
-    let to = null;
-
-    userHelpers.findUser(where, (err, user) => {
-      if (err) {
-        console.error(err);
-      } else {
-        to = user.firebaseToken;
-        lib.notify(to, {data: result});
-      };
     });
   } else {
     console.error(error);
