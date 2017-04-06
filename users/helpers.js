@@ -44,8 +44,9 @@ const findUser = (where, callback) => {
 
 
 const searchUsers = (limit, where, callback) => {
+  limit = limit < 100 ? limit:10;
   User.find(where)
-    .limit(limit < 100 ? limit:10)  // how many to return
+    .limit(50)  // how many to return
     .sort({ name: 1 })
     .then((users) => {
       if (!users) {
