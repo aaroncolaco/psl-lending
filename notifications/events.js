@@ -52,7 +52,7 @@ const createDealEvent = blockchainContract.createDealEvent((error, result) => {
         console.error(err);
       } else {
         to = user.firebaseToken;
-        lib.notify(to, {data: result.args});
+        lib.notify(to, {data: JSON.stringify(result)});
       };
     });
 
@@ -101,7 +101,7 @@ const acceptDealEvent = blockchainContract.acceptDealEvent((error, result) => {
             console.error(err);
           } else {
             to = user.firebaseToken;
-            lib.notify(to, {data: result.args});
+            lib.notify(to, {data: JSON.stringify(result)});
           };
         });
       }
