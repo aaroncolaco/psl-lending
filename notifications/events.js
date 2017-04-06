@@ -117,6 +117,48 @@ const settleDealEvent = blockchainContract.settleDealEvent((error, result) => {
     console.log(result + "\n");
     console.log(JSON.stringify(result) + "\n");
     console.log(JSON.stringify(result.args) + "\n");
+
+    const ethereumId = result.args.deal_id.toString();
+    const txId = result.transactionHash;
+
+    const data = JSON.parse(result.args.data);
+    const borrowerId = data.to.replace('0x', '');
+    const lenderId = data.from.replace('0x', '');
+
+    const status = 'initiateSettlement';
+
+    const attributes = {
+      status,
+      txId
+    };
+
+    // find and update deal in DB
+    request(config.getURL() + '/api/deals/?ethereumId=' + ethereumId, (err, response, body) => {
+      if (err) {
+        console.error(err);
+      } else {
+        body = JSON.parse(body);
+        const id = body[0]._id;
+        request.post(config.getURL() + '/api/deals/' + id).form(attributes);
+
+        // notify user
+        const where = {
+          ethAccount: lenderId
+        };
+        let to = null;
+
+        userHelpers.findUser(where, (err, user) => {
+          if (err) {
+            console.error(err);
+          } else {
+            to = user.firebaseToken;
+            lib.notify(to, {data: JSON.stringify(result)});
+          };
+        });
+      }
+    });
+  } else {
+    console.error(error);
   }
 });
 
@@ -125,6 +167,48 @@ const acceptSettleDealEvent = blockchainContract.acceptSettleDealEvent((error, r
     console.log(result + "\n");
     console.log(JSON.stringify(result) + "\n");
     console.log(JSON.stringify(result.args) + "\n");
+
+    const ethereumId = result.args.deal_id.toString();
+    const txId = result.transactionHash;
+
+    const data = JSON.parse(result.args.data);
+    const borrowerId = data.to.replace('0x', '');
+    const lenderId = data.from.replace('0x', '');
+
+    const status = 'closed';
+
+    const attributes = {
+      status,
+      txId
+    };
+
+    // find and update deal in DB
+    request(config.getURL() + '/api/deals/?ethereumId=' + ethereumId, (err, response, body) => {
+      if (err) {
+        console.error(err);
+      } else {
+        body = JSON.parse(body);
+        const id = body[0]._id;
+        request.post(config.getURL() + '/api/deals/' + id).form(attributes);
+
+        // notify user
+        const where = {
+          ethAccount: lenderId
+        };
+        let to = null;
+
+        userHelpers.findUser(where, (err, user) => {
+          if (err) {
+            console.error(err);
+          } else {
+            to = user.firebaseToken;
+            lib.notify(to, {data: JSON.stringify(result)});
+          };
+        });
+      }
+    });
+  } else {
+    console.error(error);
   }
 });
 
