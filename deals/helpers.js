@@ -42,12 +42,13 @@ const findDeal = (where, callback) => {
     });
 };
 
+
 const searchDeals = (limit, where, callback) => {
   limit = limit >= 100 ? 100:limit;
   limit = limit < 1 ? 10:limit; // to stop negatives
   Deal.find(where)
     .limit(50)  // how many to return
-    .sort({ created_at: 'asc' })
+    .sort({ createdAt: 'desc' })
     .then((deals) => {
       if (!deals) {
         return callback({"status": 404, "message": "Not found"}, null);
@@ -84,7 +85,6 @@ const updateDeal = (where, attributes, callback) => {
       return callback({"status": 500, "error": err}, null);
     });
 };
-
 
 
 
