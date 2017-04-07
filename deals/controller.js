@@ -75,29 +75,29 @@ const getAllDeals = (req, res) => {
         return res.status(200).json(dealsUserIsPartOf);
       });
     });
-  };
+  } else {
+    // filter based on params
+    if (query.hasOwnProperty('borrowerId') && _.isString(query.borrowerId)) {
+      where.borrowerId = query.borrowerId;
+    };
+    if (query.hasOwnProperty('ethereumId') && _.isString(query.ethereumId)) {
+      where.ethereumId = query.ethereumId;
+    };
+    if (query.hasOwnProperty('lenderId') && _.isString(query.lenderId)) {
+      where.lenderId = query.lenderId;
+    };
+    if (query.hasOwnProperty('limit') && _.isInteger(query.limit)) {
+      limit = query.limit;
+    };
 
-  // filter based on params
-  if (query.hasOwnProperty('borrowerId') && _.isString(query.borrowerId)) {
-    where.borrowerId = query.borrowerId;
+    helpers.searchDeals(limit, where, (err, deals) => {
+      if (err) {
+        console.error(err);
+        return res.status(err.status || 500).json(err);
+      }
+      res.status(200).json(deals);
+    });
   };
-  if (query.hasOwnProperty('ethereumId') && _.isString(query.ethereumId)) {
-    where.ethereumId = query.ethereumId;
-  };
-  if (query.hasOwnProperty('lenderId') && _.isString(query.lenderId)) {
-    where.lenderId = query.lenderId;
-  };
-  if (query.hasOwnProperty('limit') && _.isInteger(query.limit)) {
-    limit = query.limit;
-  };
-
-  helpers.searchDeals(limit, where, (err, deals) => {
-    if (err) {
-      console.error(err);
-      return res.status(err.status || 500).json(err);
-    }
-    res.status(200).json(deals);
-  });
 };
 
 const getDealById = (req, res) => {
