@@ -47,7 +47,7 @@ const searchDeals = (limit, where, callback) => {
   limit = limit < 1 ? 10:limit; // to stop negatives
   Deal.find(where)
     .limit(50)  // how many to return
-    .sort({ status: 1 })
+    .sort({ created_at: 'asc' })
     .then((deals) => {
       if (!deals) {
         return callback({"status": 404, "message": "Not found"}, null);
