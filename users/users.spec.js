@@ -11,11 +11,11 @@ const config = require('../config');
 const hostURL = config.getURL();
 const apiRootURL = '/api/users/';
 var completeURL = hostURL + apiRootURL;
+var verificationURL = hostURL + apiRootURL;
 
 
 const user = {
   "email": "johndoe@google.com",
-  "firebaseToken": "ashfuidghf23784r698x7wmydr79q23465r39xnyce9xnr72346yr72cy9weyrn23479r234890",
   "name": "John Doe"
 };
 
@@ -29,7 +29,7 @@ const updatedUser = {
 
 describe('User Tests', () => {
   describe('POST /users', () => {
-    it('created new user', (done) => {
+    it('signup user', (done) => {
       chai.request(completeURL)
         .post('')
         .send(user)
@@ -38,8 +38,24 @@ describe('User Tests', () => {
           expect(res).to.be.an('object');
 
           expect(res.body.email).to.equal(user.email);
-          expect(res.body.ethAccount).to.equal(undefined);
-          expect(res.body.firebaseToken).to.equal(user.firebaseToken);
+          expect(res.body.name).to.equal(user.name);
+
+          verificationURL = completeURL + 'verify/' + res.body._id;
+          done();
+        });
+    });
+  });
+
+  describe('POST /users/verify/:id', () => {
+    it('verify user', (done) => {
+      chai.request(verificationURL)
+        .post('')
+        .send({"otp": "1234"})
+        .end((err, res) => {
+          expect(res).to.have.status(202);
+          expect(res).to.be.an('object');
+
+          expect(res.body.email).to.equal(user.email);
           expect(res.body.name).to.equal(user.name);
 
           completeURL = completeURL + res.body._id;
@@ -57,8 +73,6 @@ describe('User Tests', () => {
           expect(res).to.be.an('object');
 
           expect(res.body[0].email).to.equal(user.email);
-          expect(res.body[0].ethAccount).to.equal(undefined);
-          expect(res.body[0].firebaseToken).to.equal(user.firebaseToken);
           expect(res.body[0].name).to.equal(user.name);
 
           done();
@@ -75,8 +89,6 @@ describe('User Tests', () => {
           expect(res).to.be.an('object');
 
           expect(res.body[0].email).to.equal(user.email);
-          expect(res.body[0].ethAccount).to.equal(undefined);
-          expect(res.body[0].firebaseToken).to.equal(user.firebaseToken);
           expect(res.body[0].name).to.equal(user.name);
 
           done();
@@ -93,8 +105,6 @@ describe('User Tests', () => {
           expect(res).to.be.an('object');
 
           expect(res.body.email).to.equal(user.email);
-          expect(res.body.ethAccount).to.equal(undefined);
-          expect(res.body.firebaseToken).to.equal(user.firebaseToken);
           expect(res.body.name).to.equal(user.name);
 
           done();

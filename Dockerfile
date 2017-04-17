@@ -6,6 +6,8 @@ WORKDIR /usr/src/app
 
 # Set environment to production
 ENV NODE_ENV production
+# ENV ADMIN_EMAIL aaron_colaco@persistent.co.in
+# ENV ADMIN_EMAIL_PASSWORD user_password_here
 
 # Install app dependencies
 COPY package.json /usr/src/app/

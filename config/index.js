@@ -6,6 +6,12 @@ const envtConfig = config[env]; // env specific values
 const firebaseServiceAccount = require('./firebase-admin');
 
 module.exports = {
+  getAdminEmail : () => {
+    return process.env.ADMIN_EMAIL || config.adminEmail;
+  },
+  getAdminEmailPassword : () => {
+    return process.env.ADMIN_EMAIL_PASSWORD || config.adminEmailPassword;
+  },
   getEnv: () => {
     return env;
   },

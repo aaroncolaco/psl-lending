@@ -1,7 +1,7 @@
 'use strict';
 
-const lib = require('./lib');
-const events = require('./events');
+// const lib = require('./lib');
+// const events = require('./events');
 
 module.exports = {
   notifyUser : (to, notification) => {

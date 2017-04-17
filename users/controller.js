@@ -3,25 +3,11 @@
 const _ = require('lodash');
 
 const helpers = require('./helpers');
+const lib = require('./lib');
 const notifications = require('../notifications');
 
 
-const createUser = (req, res) => {
-  const attributes = {
-    email : req.body.email,
-    ethAccount : req.body.ethAccount,
-    firebaseToken: req.body.firebaseToken,
-    name : req.body.name
-  };
-
-  helpers.createUser(attributes, (err, user) => {
-    if (err) {
-      console.log(err);
-      return res.status(err.status || 500).json(err);
-    }
-    res.status(201).json(user);
-  });
-};
+// verified users
 
 const deleteUser = (req, res) => {
 
@@ -31,7 +17,7 @@ const deleteUser = (req, res) => {
 
   helpers.deleteUser(where, (err, user) => {
     if (err) {
-      console.log(err);
+      console.error(err);
       return res.status(err.status || 500).json(err);
     }
     res.status(200).json(user);
@@ -45,7 +31,7 @@ const getUserById = (req, res) => {
 
   helpers.findUser(where, (err, user) => {
     if (err) {
-      console.log(err);
+      console.error(err);
       return res.status(err.status || 500).json(err);
     }
     res.status(200).json(user);
@@ -72,7 +58,7 @@ const getUsers = (req, res) => {
 
   helpers.searchUsers(limit, where, (err, users) => {
     if (err) {
-      console.log(err);
+      console.error(err);
       return res.status(err.status || 500).json(err);
     }
     res.status(200).json(users);
@@ -93,7 +79,7 @@ const updateUser = (req, res) => {
 
   helpers.updateUser(where, attributes, (err, user) => {
     if (err) {
-      console.log(err);
+      console.error(err);
       return res.status(err.status || 500).json(err);
     }
     res.status(202).json(user);
@@ -101,10 +87,53 @@ const updateUser = (req, res) => {
 };
 
 
+
+const signUp = (req, res) => {
+  const otp = lib.generateOtp();
+  const attributes = {
+    email : req.body.email,
+    name : req.body.name,
+    otp,
+    verified: false
+  };
+
+  helpers.createUnverifiedUser(attributes, (err, user) => {
+    if (err) {
+      console.error(err);
+      return res.status(err.status || 500).json(err);
+    }
+
+    lib.sendOtp(user.email, user.otp)
+      .then((success) => {
+        return res.status(201).json(user);
+      })
+      .catch((error) => {
+        console.error(error);
+        return res.status(error.status || 500).json(error);
+      });
+  });
+};
+
+const verifyUser = (req, res) => {
+  const id = req.params.id;
+  const otp = req.body.otp;
+
+  lib.verifyUser(id, otp)
+    .then((verifiedUser) => {
+      return res.status(202).send(verifiedUser);
+    })
+    .catch((err) => {
+      console.error(err);
+      return res.status(err.status || 500).json(err);
+    });
+};
+
 module.exports = {
-  createUser,
   deleteUser,
   getUserById,
   getUsers,
-  updateUser
+  updateUser,
+
+  signUp,
+  verifyUser
 };

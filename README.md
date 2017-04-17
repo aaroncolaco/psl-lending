@@ -18,6 +18,8 @@ touch notifications/contractAddress.txt
 ## Deploying via Docker
 * Install [docker](https://docs.docker.com/engine/installation/) and [docker-compose](https://docs.docker.com/compose/install/) based on your platform.
 
+* Set values for `ADMIN_EMAIL` and `ADMIN_EMAIL_PASSWORD` in Dockerfile. If not set/removed, will use values in `config.json`
+
 * Run docker container:
 ```console
 docker-compose up --build
