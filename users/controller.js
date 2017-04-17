@@ -71,7 +71,6 @@ const updateUser = (req, res) => {
   };
 
   const attributes = {
-    email : req.body.email,
     ethAccount : req.body.ethAccount,
     firebaseToken: req.body.firebaseToken,
     name : req.body.name
