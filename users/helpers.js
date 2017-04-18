@@ -94,13 +94,13 @@ const createUnverifiedUser = (attributes, callback) => {
     });
 };
 
-const deleteUnverifiedUser = (where, callback) => {
-  unverifiedUser.findByIdAndRemove(where)
-    .then((user) => {
-      if (!user) {
+const deleteUnverifiedUsers = (where, callback) => {
+  unverifiedUser.remove(where)
+    .then((removed) => {
+      if (!removed) {
         return callback({"status": 404, "message": "Not found"}, null);
       };
-      return callback(null, user);
+      return callback(null, removed);
     })
     .catch((err) => {
       return callback({"status": 500, "error": err}, null);
@@ -129,6 +129,6 @@ module.exports = {
   updateUser,
 
   createUnverifiedUser,
-  deleteUnverifiedUser,
+  deleteUnverifiedUsers,
   findUnverifiedUser
 };

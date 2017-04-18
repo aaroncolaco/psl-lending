@@ -78,6 +78,19 @@ const verifyUser = (id, otp) => {
           "name": user.name
         };
 
+        // set verified to true
+        user.update({"verified": true})
+          .then((success) => {
+          }, (err) => {
+            console.error(err);
+          });
+
+        helpers.deleteUnverifiedUsers({"email": user.email}, (err, removedCount) => {
+          if (err) {
+            console.error(err);
+          }
+        })
+
         helpers.createUser(attributes, (err, verifiedUser) => {
           if (err) {
             return reject(err);
