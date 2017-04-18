@@ -133,7 +133,7 @@ describe('User Tests', () => {
           expect(res).to.have.status(200);
           expect(res).to.be.an('object');
 
-          expect(res.body.email).to.equal(updatedUser.email);
+          expect(res.body.email).to.equal(user.email);
           expect(res.body.ethAccount).to.equal(updatedUser.ethAccount);
           expect(res.body.firebaseToken).to.equal(updatedUser.firebaseToken);
           expect(res.body.name).to.equal(updatedUser.name);
@@ -151,7 +151,7 @@ describe('User Tests', () => {
           expect(res).to.have.status(200);
           expect(res).to.be.an('object');
 
-          expect(res.body.email).to.equal(updatedUser.email);
+          expect(res.body.email).to.equal(user.email);
           expect(res.body.ethAccount).to.equal(updatedUser.ethAccount);
           expect(res.body.firebaseToken).to.equal(updatedUser.firebaseToken);
           expect(res.body.name).to.equal(updatedUser.name);

@@ -7,10 +7,10 @@ const firebaseServiceAccount = require('./firebase-admin');
 
 module.exports = {
   getAdminEmail : () => {
-    return process.env.ADMIN_EMAIL || config.adminEmail;
+    return process.env.ADMIN_EMAIL || envtConfig.adminEmail;
   },
   getAdminEmailPassword : () => {
-    return process.env.ADMIN_EMAIL_PASSWORD || config.adminEmailPassword;
+    return process.env.ADMIN_EMAIL_PASSWORD || envtConfig.adminEmailPassword;
   },
   getEnv: () => {
     return env;

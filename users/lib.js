@@ -21,7 +21,7 @@ const getRandomIntInclusive = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-const sendEmail = (to, emailBody) => {
+const sendEmail = (to, emailBodyPlainText, emailBodyHtml) => {
   return new Promise((resolve, reject) => {
     // create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
@@ -38,8 +38,8 @@ const sendEmail = (to, emailBody) => {
       from: '"PSL Microlending" <' + adminEmail +'>', // sender address
       to: to, // list of receivers
       subject: 'OTP - Verify Your Microlending Account ✔', // Subject line
-      text: emailBody, // plain text body
-      html: '<b>' + emailBody + '</b>' // html body
+      text: emailBodyPlainText, // plain text body
+      html: emailBodyHtml // html body
     };
 
     // send mail with defined transport object
@@ -55,8 +55,9 @@ const sendEmail = (to, emailBody) => {
 
 const sendOtp = (to, otp) => {
   // construct body of email and metadata and call `sendEmail` function to send
-  const emailBody = "Thank you for signing up for Microlending!\n\nYour OTP is: " + otp;
-  return sendEmail(to, emailBody);
+  const emailBodyPlainText = "Thank you for signing up for Microlending!\n\nYour OTP is: " + otp;
+  const emailBodyHtml = `<p>Thank you for signing up for Microlending! <br/><br/> <b>Your OTP is: <i>${otp}</i></b></p> `
+  return sendEmail(to, emailBodyPlainText, emailBodyHtml);
 };
 
 const verifyUser = (id, otp) => {
