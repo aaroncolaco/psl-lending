@@ -10,9 +10,9 @@ const adminEmailPassword = config.getAdminEmailPassword();
 
 const generateOtp = () => {
   if (env === 'production') {
-    return getRandomIntInclusive(1000, 9999);
+    return getRandomIntInclusive(100000, 999999);
   }
-  return '1234';
+  return '123456';
 };
 
 const getRandomIntInclusive = (min, max) => {

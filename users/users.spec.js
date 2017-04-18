@@ -14,6 +14,7 @@ var completeURL = hostURL + apiRootURL;
 var usersUrl = completeURL;
 var verificationURL = hostURL + apiRootURL;
 
+const otp = "123456";
 
 const user = {
   "email": "aaron_colaco@persistent.co.in",
@@ -51,7 +52,7 @@ describe('User Tests', () => {
     it('verify user', (done) => {
       chai.request(verificationURL)
         .post('')
-        .send({"otp": "1234"})
+        .send({otp})
         .end((err, res) => {
           expect(res).to.have.status(202);
           expect(res).to.be.an('object');
