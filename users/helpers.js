@@ -84,14 +84,27 @@ const updateUser = (where, attributes, callback) => {
 
 // unverified Users
 const createUnverifiedUser = (attributes, callback) => {
-  const newUser = unverifiedUser(attributes);
+  const where = {
+    email: attributes.email
+  }
+  findUser(where, (err, verifiedUsers) => {
+    if (err) {
+      console.error(err);
+    }
+    if (!verifiedUsers) {
+      const newUser = unverifiedUser(attributes);
 
-  newUser.save()
-    .then((user) => {
-      return callback(null, newUser);
-    }, (err) => {
-      return callback({"status": 400, "message": "Bad Data", "error": err}, null);
-    });
+      newUser.save()
+        .then((user) => {
+          return callback(null, newUser);
+        }, (err) => {
+          return callback({"status": 400, "message": "Bad Data", "error": err}, null);
+        });
+    } else {
+      // if already registered, reject
+      return callback({"status": 409, "message": "User Already Registered"}, null);
+    }
+  });
 };
 
 const deleteUnverifiedUsers = (where, callback) => {

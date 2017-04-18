@@ -11,16 +11,17 @@ const config = require('../config');
 const hostURL = config.getURL();
 const apiRootURL = '/api/users/';
 var completeURL = hostURL + apiRootURL;
+var usersUrl = completeURL;
 var verificationURL = hostURL + apiRootURL;
 
 
 const user = {
-  "email": "johndoe@google.com",
+  "email": "aaron_colaco@persistent.co.in",
   "name": "John Doe"
 };
 
 const updatedUser = {
-  "email": "janedoe@google.com",
+  "email": "aaron_colaco@persistent.com",
   "ethAccount": "fsdf79873453jkwhr89342",
   "firebaseToken": "ashfuidghf23784r698x3534895dsdgfsdg6556df4gdf1346yr72cy9weyrn23479r2348rwee",
   "name": "Jane Doe"
@@ -30,7 +31,7 @@ const updatedUser = {
 describe('User Tests', () => {
   describe('POST /users', () => {
     it('signup user', (done) => {
-      chai.request(completeURL)
+      chai.request(usersUrl)
         .post('')
         .send(user)
         .end((err, res) => {
@@ -64,9 +65,23 @@ describe('User Tests', () => {
     });
   });
 
+  describe('POST /users', () => {
+    it('signup with existing email fails', (done) => {
+      chai.request(usersUrl)
+        .post('')
+        .send(user)
+        .end((err, res) => {
+          expect(res).to.have.status(409);
+          expect(res).to.be.an('object');
+
+          done();
+        });
+    });
+  });
+
   describe('GET /users/?name=JohN D', () => {
     it('search users by name', (done) => {
-      chai.request(hostURL + apiRootURL)
+      chai.request(usersUrl)
         .get('?name=JohN D')
         .end((err, res) => {
           expect(res).to.have.status(200);
@@ -80,10 +95,10 @@ describe('User Tests', () => {
     });
   });
 
-  describe('GET /users/?email=joHn', () => {
+  describe('GET /users/?email=aarO', () => {
     it('search users by email', (done) => {
-      chai.request(hostURL + apiRootURL)
-        .get('?email=joHn')
+      chai.request(usersUrl)
+        .get('?email=aarO')
         .end((err, res) => {
           expect(res).to.have.status(200);
           expect(res).to.be.an('object');
