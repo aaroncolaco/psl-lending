@@ -61,9 +61,18 @@ const sendOtp = (to, otp) => {
 };
 
 const verifyUser = (id, otp) => {
+
+  const otpValidity = 4; // making otp valid for 4 hours since creation
+
+  const now = new Date();
+  now.setHours(now.getHours() - otpValidity);
+
+  const validTime = new Date(now);
+
   const where = {
     _id: id,
-    otp
+    otp,
+    createdAt: {$gte: validTime}
   };
 
   return new Promise((resolve, reject) => {
