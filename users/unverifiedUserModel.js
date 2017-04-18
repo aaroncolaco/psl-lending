@@ -24,9 +24,9 @@ const unverifiedUserSchema = new Schema({
     required: [true, '{PATH} is required'],
     trim: true
   },
-  verified: {
-    type: Boolean,
-    required: [true, '{PATH} is required'],
+  attempts: {
+    type: Number,
+    required: [true, '{PATH} is required']
   }
 }, {
   timestamps: true

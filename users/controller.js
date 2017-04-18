@@ -93,7 +93,7 @@ const signUp = (req, res) => {
     email : req.body.email,
     name : req.body.name,
     otp,
-    verified: false
+    attempts: 0
   };
 
   helpers.createUnverifiedUser(attributes, (err, user) => {
