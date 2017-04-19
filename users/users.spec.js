@@ -25,7 +25,8 @@ const updatedUser = {
   "email": "aaron_colaco@persistent.com",
   "ethAccount": "fsdf79873453jkwhr89342",
   "firebaseToken": "ashfuidghf23784r698x3534895dsdgfsdg6556df4gdf1346yr72cy9weyrn23479r2348rwee",
-  "name": "Jane Doe"
+  "name": "Jane Doe",
+  "publicKey": "2387r9n8y249c7rny2347899mxcy934"
 };
 
 
@@ -153,6 +154,7 @@ describe('User Tests', () => {
           expect(res.body.ethAccount).to.equal(updatedUser.ethAccount);
           expect(res.body.firebaseToken).to.equal(updatedUser.firebaseToken);
           expect(res.body.name).to.equal(updatedUser.name);
+          expect(res.body.publicKey).to.equal(updatedUser.publicKey);
 
           done();
         });
@@ -171,6 +173,7 @@ describe('User Tests', () => {
           expect(res.body.ethAccount).to.equal(updatedUser.ethAccount);
           expect(res.body.firebaseToken).to.equal(updatedUser.firebaseToken);
           expect(res.body.name).to.equal(updatedUser.name);
+          expect(res.body.publicKey).to.equal(updatedUser.publicKey);
 
           done();
         });

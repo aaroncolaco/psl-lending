@@ -39,7 +39,7 @@ const unverifiedUserSchema = new Schema({
 *****/
 
 // called implicitly when returning user object to API as json
-// making sure the password, salt, hash and sensitive data is not sent
+// making sure sensitive data is not sent
 unverifiedUserSchema.methods.toJSON = function() {
   var user = this;
   var userObject = user.toObject();

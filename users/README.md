@@ -65,8 +65,27 @@ Save `_id` so that you can use it to verify account.
 {
   "email": "aaron_colaco@persistent.co.in",
   "ethAccount": "fsdf79873453jkwhr89342",
+  "firebaseToken": "sdfwedsf564sd56f453156sdf1sdf",
   "name": "John Smith",
-  "firebaseToken": "sdfwedsf564sd56f453156sdf1sdf"
+  "publicKey": "asfdihywq789y4r2378462387n6xdz823762378463232werd"
 }
 ```
 
+#### Possible Responses
+#### Success
+* Response with status code `202` and body:
+```json
+{
+  "_id": "65f5f04440b37d2a044dd69d",
+  "email": "aaron_colaco@persistent.co.in",
+  "ethAccount": "fsdf79873453jkwhr89342",
+  "firebaseToken": "sdfwedsf564sd56f453156sdf1sdf",
+  "name": "John Smith",
+  "publicKey": "asfdihywq789y4r2378462387n6xdz823762378463232werd"
+}
+```
+
+#### Failure
+* Response with status code `400` if bad data
+* Response with status code `404` if not found
+* Server error with status code `500`

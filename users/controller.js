@@ -66,15 +66,26 @@ const getUsers = (req, res) => {
 };
 
 const updateUser = (req, res) => {
+  const body = _.pick(req.body, ['ethAccount', 'firebaseToken', 'name', 'publicKey'])
   const where = {
     _id: req.params.id
   };
 
-  const attributes = {
-    ethAccount : req.body.ethAccount,
-    firebaseToken: req.body.firebaseToken,
-    name : req.body.name
-  };
+  const attributes = {};
+
+  if (body.hasOwnProperty('ethAccount') && _.isString(body.ethAccount)) {
+    attributes.ethAccount = body.ethAccount;
+  }
+  if (body.hasOwnProperty('firebaseToken') && _.isString(body.firebaseToken)) {
+    attributes.firebaseToken = body.firebaseToken;
+  }
+  if (body.hasOwnProperty('name') && _.isString(body.name)) {
+    attributes.name = body.name;
+  }
+  if (body.hasOwnProperty('publicKey') && _.isString(body.publicKey)) {
+    attributes.publicKey = body.publicKey;
+  }
+
 
   helpers.updateUser(where, attributes, (err, user) => {
     if (err) {

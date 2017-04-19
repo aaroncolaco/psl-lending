@@ -28,6 +28,10 @@ const userSchema = new Schema({
   ethAccount: {
     type: String,
     trim: true
+  },
+  publicKey: {
+    type: String,
+    trim: true
   }
 }, {
   timestamps: true
