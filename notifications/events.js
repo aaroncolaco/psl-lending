@@ -53,7 +53,7 @@ const createDealEvent = blockchainContract.createDealEvent((error, result) => {
       } else {
         to = user.firebaseToken;
         lib.notify(to, {data: JSON.stringify(result)});
-      };
+      }
     });
 
   } else {
@@ -102,7 +102,7 @@ const acceptDealEvent = blockchainContract.acceptDealEvent((error, result) => {
           } else {
             to = user.firebaseToken;
             lib.notify(to, {data: JSON.stringify(result)});
-          };
+          }
         });
       }
     });
@@ -153,7 +153,7 @@ const settleDealEvent = blockchainContract.settleDealEvent((error, result) => {
           } else {
             to = user.firebaseToken;
             lib.notify(to, {data: JSON.stringify(result)});
-          };
+          }
         });
       }
     });
@@ -203,7 +203,7 @@ const acceptSettleDealEvent = blockchainContract.acceptSettleDealEvent((error, r
           } else {
             to = user.firebaseToken;
             lib.notify(to, {data: JSON.stringify(result)});
-          };
+          }
         });
       }
     });

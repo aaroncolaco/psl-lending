@@ -45,16 +45,16 @@ const getUsers = (req, res) => {
 
   if (query.hasOwnProperty('ethAccount') && _.isString(query.ethAccount)) {
     where.ethAccount = new RegExp(query.ethAccount.trim(), 'i');
-  };
+  }
   if (query.hasOwnProperty('name') && _.isString(query.name)) {
     where.name = new RegExp(query.name.trim(), 'i');
-  };
+  }
   if (query.hasOwnProperty('email') && _.isString(query.email)) {
     where.email = new RegExp(query.email.trim(), 'i');
-  };
+  }
   if (query.hasOwnProperty('limit') && _.isInteger(query.limit)) {
     limit = query.limit;
-  };
+  }
 
   helpers.searchUsers(limit, where, (err, users) => {
     if (err) {
@@ -66,7 +66,7 @@ const getUsers = (req, res) => {
 };
 
 const updateUser = (req, res) => {
-  const body = _.pick(req.body, ['ethAccount', 'firebaseToken', 'name', 'publicKey'])
+  const body = _.pick(req.body, ['ethAccount', 'firebaseToken', 'name', 'publicKey']);
   const where = {
     _id: req.params.id
   };

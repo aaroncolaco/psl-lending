@@ -21,7 +21,7 @@ const deleteUser = (where, callback) => {
     .then((user) => {
       if (!user) {
         return callback({"status": 404, "message": "Not found"}, null);
-      };
+      }
       return callback(null, user);
     })
     .catch((err) => {
@@ -35,7 +35,7 @@ const findUser = (where, callback) => {
     .then((user) => {
       if (!user) {
         return callback({"status": 404, "message": "Not found"}, null);
-      };
+      }
       return callback(null, user);
     })
     .catch((err) => {
@@ -52,7 +52,7 @@ const searchUsers = (limit, where, callback) => {
     .then((users) => {
       if (!users) {
         return callback({"status": 404, "message": "Not found"}, null);
-      };
+      }
       return callback(null, users);
     })
     .catch((err) => {
@@ -74,7 +74,7 @@ const updateUser = (where, attributes, callback) => {
         }, (err) => {
           return callback({"status": 400, "error": "Bad data"}, null);
         });
-      };
+      }
     }, (err) => {
       console.log(err);
       return callback({"status": 500, "error": err}, null);
@@ -86,7 +86,7 @@ const updateUser = (where, attributes, callback) => {
 const createUnverifiedUser = (attributes, callback) => {
   const where = {
     email: attributes.email
-  }
+  };
   findUser(where, (err, verifiedUsers) => {
     if (err) {
       console.error(err);
@@ -112,7 +112,7 @@ const deleteUnverifiedUsers = (where, callback) => {
     .then((removed) => {
       if (!removed) {
         return callback({"status": 404, "message": "Not found"}, null);
-      };
+      }
       return callback(null, removed);
     })
     .catch((err) => {
@@ -125,7 +125,7 @@ const findUnverifiedUser = (where, callback) => {
     .then((user) => {
       if (!user) {
         return callback({"status": 404, "message": "Not found"}, null);
-      };
+      }
       return callback(null, user);
     })
     .catch((err) => {

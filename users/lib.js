@@ -19,7 +19,7 @@ const getRandomIntInclusive = (min, max) => {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+};
 
 const sendEmail = (to, emailBodyPlainText, emailBodyHtml) => {
   return new Promise((resolve, reject) => {
@@ -112,7 +112,7 @@ const verifyUser = (id, otp) => {
           if (err) {
             console.error(err);
           }
-        })
+        });
 
         helpers.createUser(attributes, (err, verifiedUser) => {
           if (err) {

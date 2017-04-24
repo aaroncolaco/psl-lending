@@ -79,16 +79,16 @@ const getAllDeals = (req, res) => {
     // filter based on params
     if (query.hasOwnProperty('borrowerId') && _.isString(query.borrowerId)) {
       where.borrowerId = query.borrowerId;
-    };
+    }
     if (query.hasOwnProperty('ethereumId') && _.isString(query.ethereumId)) {
       where.ethereumId = query.ethereumId;
-    };
+    }
     if (query.hasOwnProperty('lenderId') && _.isString(query.lenderId)) {
       where.lenderId = query.lenderId;
-    };
+    }
     if (query.hasOwnProperty('limit') && _.isInteger(query.limit)) {
       limit = query.limit;
-    };
+    }
 
     helpers.searchDeals(limit, where, (err, deals) => {
       if (err) {
@@ -97,7 +97,7 @@ const getAllDeals = (req, res) => {
       }
       res.status(200).json(deals);
     });
-  };
+  }
 };
 
 const getDealById = (req, res) => {

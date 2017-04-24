@@ -27,10 +27,10 @@ mongoose.connect(config.getDbConnectionString(), function(err) {
   console.log('MongoDB: ' + config.getDbConnectionString());
 
   if (err) {
-    console.log(err);
+    console.error(err);
   } else {
     console.log('Connected to MongoDB successfully');
-  };
+  }
 });
 
 app.use('/api/deals', deals);
@@ -51,7 +51,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.end("Error. Check Console.")
+  res.end("Error. Check Console.");
 });
 
 module.exports = app;

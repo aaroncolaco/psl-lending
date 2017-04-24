@@ -20,7 +20,7 @@ const deleteDeal = (where, callback) => {
     .then((deal) => {
       if (!deal) {
         return callback({"status": 404, "message": "Not found"}, null);
-      };
+      }
       return callback(null, deal);
     })
     .catch((err) => {
@@ -34,7 +34,7 @@ const findDeal = (where, callback) => {
     .then((deal) => {
       if (!deal) {
         return callback({"status": 404, "message": "Not found"}, null);
-      };
+      }
       return callback(null, deal);
     })
     .catch((err) => {
@@ -52,7 +52,7 @@ const searchDeals = (limit, where, callback) => {
     .then((deals) => {
       if (!deals) {
         return callback({"status": 404, "message": "Not found"}, null);
-      };
+      }
       return callback(null, deals);
     })
     .catch((err) => {
@@ -79,7 +79,7 @@ const updateDeal = (where, attributes, callback) => {
         }, (err) => {
           return callback({"status": 400, "error": "Bad data"}, null);
         });
-      };
+      }
     }, (err) => {
       console.log(err);
       return callback({"status": 500, "error": err}, null);
