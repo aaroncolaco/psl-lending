@@ -1,5 +1,6 @@
 'use strict';
 
+const _ = require('lodash');
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
@@ -36,6 +37,13 @@ const userSchema = new Schema({
 }, {
   timestamps: true
 });
+
+userSchema.methods.toJSON = function() {
+  var user = this;
+  var userObject = user.toObject();
+
+  return _.pick(userObject, ['_id', 'email', 'firebaseToken', 'name', 'ethAccount', 'publicKey']);
+};
 
 const User = mongoose.model('User', userSchema);
 
