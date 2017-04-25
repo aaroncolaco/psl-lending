@@ -14,7 +14,7 @@ const users = require('./users/router');
 
 const app = express();
 
-app.use(config.getEnv() === 'developmenst' ? logger('dev') : logger('combined'));
+app.use(config.getEnv() === 'development' ? logger('dev') : logger('combined'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
