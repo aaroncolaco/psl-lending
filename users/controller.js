@@ -52,8 +52,8 @@ const getUsers = (req, res) => {
   if (query.hasOwnProperty('email') && _.isString(query.email)) {
     where.email = new RegExp(query.email.trim(), 'i');
   }
-  if (query.hasOwnProperty('limit') && _.isInteger(query.limit)) {
-    limit = query.limit;
+  if (query.hasOwnProperty('limit') && _.isInteger(parseInt(query.limit))) {
+    limit = parseInt(query.limit);
   }
 
   helpers.searchUsers(limit, where, (err, users) => {
