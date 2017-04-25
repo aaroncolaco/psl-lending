@@ -25,7 +25,7 @@ module.exports = {
     return process.env.GETH_URL || envtConfig.gethUrl;
   },
   getFirebaseServiceAccount: () => {
-    return firebaseServiceAccount
+    return firebaseServiceAccount;
   },
   getStatusMsgs: () => {
     return config.statusMsgs;
