@@ -18,7 +18,7 @@ const address = fs.readFileSync(__dirname + "/contractAddress.txt", "utf8").trim
 
 const blockchainContract = web3.eth.contract(JSON.parse(ABI)).at(address.trim());
 
-const createDealEvent = blockchainContract.createDealEvent((error, result) => {
+const createContractEvent = blockchainContract.createContractEvent((error, result) => {
   if (!error) {
     console.log(JSON.stringify(result) + "\n");
     console.log(JSON.stringify(result.args) + "\n");
@@ -61,7 +61,7 @@ const createDealEvent = blockchainContract.createDealEvent((error, result) => {
   }
 });
 
-const acceptDealEvent = blockchainContract.acceptDealEvent((error, result) => {
+const acceptContractEvent = blockchainContract.acceptContractEvent((error, result) => {
   if (!error) {
     console.log(result + "\n");
     console.log(JSON.stringify(result) + "\n");
@@ -112,7 +112,7 @@ const acceptDealEvent = blockchainContract.acceptDealEvent((error, result) => {
 
 });
 
-const settleDealEvent = blockchainContract.settleDealEvent((error, result) => {
+const settleContractEvent = blockchainContract.settleContractEvent((error, result) => {
   if (!error) {
     console.log(result + "\n");
     console.log(JSON.stringify(result) + "\n");
@@ -162,7 +162,7 @@ const settleDealEvent = blockchainContract.settleDealEvent((error, result) => {
   }
 });
 
-const acceptSettleDealEvent = blockchainContract.acceptSettleDealEvent((error, result) => {
+const acceptSettleContractEvent = blockchainContract.acceptSettleContractEvent((error, result) => {
   if (!error) {
     console.log(result + "\n");
     console.log(JSON.stringify(result) + "\n");
