@@ -5,36 +5,31 @@ const helpers = require('./helpers');
 
 
 const createDeal = (req, res) => {
-  const attributes = {
-    ethereumId: req.body.ethereumId,
-    lenderId : req.body.lenderId,
-    borrowerId : req.body.borrowerId,
-    status : req.body.status,
-    txIds : req.body.txId
-  };
-
-  helpers.createDeal(attributes, (err, deal) => {
-    if (err) {
+  helpers.createDeal(reqToDealAttributes(req))
+    .then(deal => {
+      if (!deal) {
+        return errorResponse(res, "Invalid data", Error("Invalid data"), 400);
+      }
+      res.status(201).json(deal);
+    })
+    .catch(err => {
       console.error(err);
-      return res.status(err.status || 500).json(err);
-    }
-    res.status(201).json(deal);
-  });
+      return errorResponse(res, "Could not create resource", err);
+    });
 };
 
 const deleteDeal = (req, res) => {
-
-  const where = {
-    _id: req.params.id
-  };
-
-  helpers.deleteDeal(where, (err, deal) => {
-    if (err) {
+  helpers.deleteDeal(req.params.id)
+    .then(deal => {
+      if (!deal) {
+        return errorResponse(res, "Not found", Error("Not found"), 404);
+      }
+      res.status(200).json(deal);
+    })
+    .catch(err => {
       console.error(err);
-      return res.status(err.status || 500).json(err);
-    }
-    res.status(200).json(deal);
-  });
+      return errorResponse(res, "Could not delete resource", err);
+    });
 };
 
 const getAllDeals = (req, res) => {
@@ -43,10 +38,14 @@ const getAllDeals = (req, res) => {
   const where = {};
   let limit = 10;
 
+  if (query.hasOwnProperty('limit') && _.isInteger(parseInt(query.limit))) {
+    limit = parseInt(query.limit);
+  }
+
   // get all deals where user is either lender or borrower
-  if (query.hasOwnProperty('ethAccount') && _.isString(query.ethAccount)) { // find all deals a person is part of
+  if (query.hasOwnProperty('ethAccount') && _.isString(query.ethAccount)) {
     let condition = {};
-    let dealsUserIsPartOf = null;
+    let dealsUserIsPartOf = [];
     let ethAccount = null;
 
     ethAccount = query.ethAccount;
@@ -55,26 +54,26 @@ const getAllDeals = (req, res) => {
       lenderId: ethAccount
     };
 
-    helpers.searchDeals(limit, condition, (err, dealsWhereUserIsLender) => {
-      if (err) {
-        console.error(err);
-        return res.status(err.status || 500).json(err);
-      }
-
-      condition = {
-        borrowerId: ethAccount
-      };
-
-      helpers.searchDeals(limit, condition, (err, dealsWhereUserIsBorrower) => {
-        if (err) {
-          console.error(err);
-          return res.status(err.status || 500).json(err);
+    helpers.searchDeals(limit, condition)
+      .then(dealsWhereUserIsLender => {
+        if (!!dealsWhereUserIsLender) {
+          dealsUserIsPartOf = dealsWhereUserIsLender;
         }
-        dealsUserIsPartOf = dealsWhereUserIsLender.concat(dealsWhereUserIsBorrower);
-
-        return res.status(200).json(dealsUserIsPartOf);
+        condition = {
+          borrowerId: ethAccount
+        };
+        return helpers.searchDeals(limit, condition);
+      })
+      .then(dealsWhereUserIsBorrower => {
+        if (!!dealsWhereUserIsBorrower) {
+          dealsUserIsPartOf = dealsUserIsPartOf.concat(dealsWhereUserIsBorrower);
+        }
+        return res.json(dealsUserIsPartOf);
+      })
+      .catch(err => {
+        console.log(err);
+        return errorResponse(res, "Something went wrong", err);
       });
-    });
   } else {
     // filter based on params
     if (query.hasOwnProperty('borrowerId') && _.isString(query.borrowerId)) {
@@ -86,17 +85,18 @@ const getAllDeals = (req, res) => {
     if (query.hasOwnProperty('lenderId') && _.isString(query.lenderId)) {
       where.lenderId = query.lenderId;
     }
-    if (query.hasOwnProperty('limit') && _.isInteger(query.limit)) {
-      limit = query.limit;
-    }
 
-    helpers.searchDeals(limit, where, (err, deals) => {
-      if (err) {
-        console.error(err);
-        return res.status(err.status || 500).json(err);
-      }
-      res.status(200).json(deals);
-    });
+    helpers.searchDeals(limit, where)
+      .then(deals => {
+        if (!deals) {
+          return errorResponse(res, "Not found", Error("Not found"), 404);
+        }
+        return res.json(deals);
+      })
+      .catch(err => {
+        console.log(err);
+        return errorResponse(res, "Something went wrong", err);
+      });
   }
 };
 
@@ -105,13 +105,17 @@ const getDealById = (req, res) => {
     _id: req.params.id
   };
 
-  helpers.findDeal(where, (err, deal) => {
-    if (err) {
-      console.error(err);
-      return res.status(err.status || 500).json(err);
-    }
-    res.status(200).json(deal);
-  });
+  helpers.findDeal(where)
+    .then(deal => {
+      if (!deal) {
+        return errorResponse(res, "Not found", Error("Not found"), 404);
+      }
+      return res.json(deal);
+    })
+    .catch(err => {
+      console.log(err);
+      return errorResponse(res, "Something went wrong", err);
+    });
 };
 
 const updateDeal = (req, res) => {
@@ -120,18 +124,35 @@ const updateDeal = (req, res) => {
   };
 
   const attributes = {
-    status : req.body.status,
+    status: req.body.status,
     txIds: req.body.txId
   };
 
-  helpers.updateDeal(where, attributes, (err, deal) => {
-    if (err) {
-      console.error(err);
-      return res.status(err.status || 500).json(err);
-    }
-    res.status(202).json(deal);
-  });
+  helpers.updateDeal(where, attributes)
+    .then(success => {
+      console.log(success);
+      if (!success) {
+        return errorResponse(res, "Not found", Error("Not found"), 404);
+      }
+      return res.status(202).json({status: 200, message: "Updated"});
+    })
+    .catch(err => {
+      console.log(err);
+      return errorResponse(res, "Something went wrong", err);
+    });
 };
+
+
+const reqToDealAttributes = (req) => ({
+  ethereumId: req.body.ethereumId,
+  lenderId: req.body.lenderId,
+  borrowerId: req.body.borrowerId,
+  status: req.body.status,
+  txIds: req.body.txId
+});
+
+const errorResponse = (res, message, error, status = 500) =>
+  res.status(status).json({ "status": status, "message": message, "error": error });
 
 
 module.exports = {

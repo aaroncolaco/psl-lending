@@ -3,86 +3,40 @@
 const Deal = require('./model');
 
 
-const createDeal = (attributes, callback) => {
+const createDeal = (attributes) => {
   const newDeal = Deal(attributes);
 
-  newDeal.save()
-    .then((deal) => {
-      return callback(null, newDeal);
-    }, (err) => {
-      return callback({"status": 400, "message": "Bad Data", "error": err}, null);
-    });
+  return newDeal.save();
 };
 
 
-const deleteDeal = (where, callback) => {
-  Deal.findByIdAndRemove(where)
-    .then((deal) => {
-      if (!deal) {
-        return callback({"status": 404, "message": "Not found"}, null);
-      }
-      return callback(null, deal);
-    })
-    .catch((err) => {
-      return callback({"status": 500, "error": err}, null);
-    });
+const deleteDeal = (id) => Deal.findByIdAndRemove(id);
+
+
+const findDeal = (where) => Deal.findOne(where);
+
+
+const searchDeals = (limit, where) => {
+  limit = Math.min(Math.max(limit, 1), 100); // between [0,100] only
+  return Deal.find(where)
+    .limit(limit)
+    .sort({ createdAt: 'desc' });
 };
 
 
-const findDeal = (where, callback) => {
-  Deal.findOne(where)
+const updateDeal = (where, attributes) => {
+
+  return Deal.findOne(where)
     .then((deal) => {
       if (!deal) {
-        return callback({"status": 404, "message": "Not found"}, null);
+        return Promise.resolve(false);
       }
-      return callback(null, deal);
-    })
-    .catch((err) => {
-      return callback({"status": 500, "error": err}, null);
-    });
-};
+      // append lastest txId to array of txIds
+      const txIds = deal.txIds;
+      txIds.push(attributes.txIds);
+      attributes.txIds = txIds;
 
-
-const searchDeals = (limit, where, callback) => {
-  limit = limit >= 100 ? 100:limit;
-  limit = limit < 1 ? 10:limit; // to stop negatives
-  Deal.find(where)
-    .limit(50)  // how many to return
-    .sort({ createdAt: 'desc' })
-    .then((deals) => {
-      if (!deals) {
-        return callback({"status": 404, "message": "Not found"}, null);
-      }
-      return callback(null, deals);
-    })
-    .catch((err) => {
-      return callback({"status": 500, "error": err}, null);
-    });
-};
-
-
-const updateDeal = (where, attributes, callback) => {
-  const id = where.id;
-
-  Deal.findOne(where)
-    .then((deal) => {
-      if (!deal) {
-        return callback({"status": 404, "message": "Not found"}, null);
-      } else {
-        // append lastest txId to array of txIds
-        const txIds = deal.txIds;
-        txIds.push(attributes.txIds);
-        attributes.txIds = txIds;
-
-        deal.update(attributes).then(() => {
-         return callback(null, true);
-        }, (err) => {
-          return callback({"status": 400, "error": "Bad data"}, null);
-        });
-      }
-    }, (err) => {
-      console.log(err);
-      return callback({"status": 500, "error": err}, null);
+      return deal.update(attributes);
     });
 };
 
