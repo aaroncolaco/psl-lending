@@ -61,7 +61,7 @@ const notifyUser = (eventName, message, userEthAccount) => {
         return logError(eventName, Error("Cannot send notification to unknown Ethereum user account: " + userEthAccount));
       }
       lib.notify(user.ethAccount, message)
-        .then(response => console.log("Successfully sent message:", response));
+        .then(response => console.log("Then Block: ", JSON.stringify(response)));
     })
     .catch(err => logError(eventName, err));
 };
