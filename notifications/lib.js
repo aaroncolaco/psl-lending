@@ -10,22 +10,7 @@ admin.initializeApp({
   databaseURL: "https://resource-lending.firebaseio.com"
 });
 
-const notify = (to, data) => {
-
-  const notification = {
-    data
-  };
-
-  admin.messaging().sendToDevice(to, notification)
-    .then((response) => {
-      // See the MessagingDevicesResponse reference documentation for
-      // the contents of response.
-      console.log("Successfully sent message:", response);
-    })
-    .catch((error) => {
-      console.error("Error sending message:", error);
-    });
-};
+const notify = (to, notification) => admin.messaging().sendToDevice(to, notification);
 
 module.exports = {
   notify
