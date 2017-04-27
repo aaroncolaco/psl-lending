@@ -35,7 +35,7 @@ const sendEmail = (to, emailBodyPlainText, emailBodyHtml) => {
 
     // setup email data with unicode symbols
     let mailOptions = {
-      from: '"PSL Microlending" <' + adminEmail +'>', // sender address
+      from: '"PSL Microlending" <' + adminEmail + '>', // sender address
       to: to, // list of receivers
       subject: 'OTP - Verify Your Microlending Account ✔', // Subject line
       text: emailBodyPlainText, // plain text body
@@ -61,68 +61,59 @@ const sendOtp = (to, otp) => {
 };
 
 const verifyUser = (id, otp) => {
-
   const otpValidity = 4; // making otp valid for 4 hours since creation
 
   const now = new Date();
   now.setHours(now.getHours() - otpValidity);
-
   const validTime = new Date(now);
+
+  let tempUser = {};
 
   const where = {
     _id: id,
   };
 
-  return new Promise((resolve, reject) => {
-    helpers.findUnverifiedUser(where, (err, user) => {
-      if (err) {
-        return reject(err);
-      } else if (user) {
-
-        if (user.attempts >=4) {
-          // Exceeded number of attempts
-          return reject({"status": 429, "message": "Exceeded number of attempts"});
-        }
-
-        // increment number of attempts
-        user.update({"attempts": ++user.attempts})
-          .then((success) => {
-          }, (err) => {
-            return reject(err);
-          });
-
-        if (user.createdAt.valueOf() <= validTime.valueOf()) {
-          // OTP expired
-          return reject({"status": 400, "message": "OTP Expired"});
-        }
-
-        if (user.otp !== otp) {
-          // wrong OTP
-          return reject({"status": 401, "message": "Incorrect OTP"});
-        }
-
-        // SUCCESS. add to (Registered) Users DB
-        const attributes = {
-          "email": user.email,
-          "ethAccount": user.ethAccount,
-          "name": user.name
-        };
-
-        helpers.deleteUnverifiedUsers({"email": user.email}, (err, removedCount) => {
-          if (err) {
-            console.error(err);
-          }
-        });
-
-        helpers.createUser(attributes, (err, verifiedUser) => {
-          if (err) {
-            return reject(err);
-          }
-          return resolve(verifiedUser);
-        });
+  return helpers.findUnverifiedUser(where)
+    .then(user => {
+      if(!user) {
+        return Promise.reject({ "status": 404, "message": "User not found" });
       }
-    });
-  });
+      if (user.attempts >= 4) {
+        // Exceeded number of attempts
+        return Promise.reject({ "status": 429, "message": "Exceeded number of attempts" });
+      }
+
+      tempUser = user;
+
+      // increment number of attempts
+      return user.update({ "attempts": ++user.attempts });
+    })
+    .then(success => {
+      if (tempUser.createdAt.valueOf() <= validTime.valueOf()) {
+        // OTP expired
+        return Promise.reject({ "status": 400, "message": "OTP Expired" });
+      }
+
+      if (tempUser.otp !== otp) {
+        // wrong OTP
+        return Promise.reject({ "status": 401, "message": "Incorrect OTP" });
+      }
+
+      return helpers.deleteUnverifiedUsers({ "email": tempUser.email });
+    })
+    .then(users => {
+      // SUCCESS. add to (Registered) Users DB
+      const attributes = {
+        "email": tempUser.email,
+        "ethAccount": ' ',
+        "publicKey": ' ',
+        "name": tempUser.name
+      };
+
+      return helpers.createUser(attributes)
+    })
+    .then(user => Promise.resolve(user))
+    .catch(err => Promise.reject(err));
 };
 
 module.exports = {

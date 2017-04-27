@@ -21,12 +21,20 @@ const user = {
   "name": "John Doe"
 };
 
-const updatedUser = {
-  "email": "aaron_colaco@persistent.com",
+const initUser = {
+  "email": "aaron_colaco123@persistent.com",
   "ethAccount": "fsdf79873453jkwhr89342",
   "firebaseToken": "ashfuidghf23784r698x3534895dsdgfsdg6556df4gdf1346yr72cy9weyrn23479r2348rwee",
   "name": "Jane Doe",
   "publicKey": "2387r9n8y249c7rny2347899mxcy934"
+};
+
+const updatedUser = {
+  "email": "aaron_colaco765@persistent.com",
+  "ethAccount": "fsdf79873453jkwhr89342fsdfdsfdsf",
+  "firebaseToken": "ashfuidghf23784r698x3534895dsdgfsdg6556df4gdf1346yr72cy9weyrn23479r2348rwee",
+  "name": "John Doe",
+  "publicKey": "2387r9n8y249cdsfsdfdsfsdf7rny2347899mxcy934"
 };
 
 
@@ -129,6 +137,84 @@ describe('User Tests', () => {
     });
   });
 
+  describe('POST /users/:id/account', () => {
+    it('init user account without `ethAccount` & `firebaseToken` fails', (done) => {
+      chai.request(completeURL + '/account')
+        .post('/')
+        .send({name: initUser.name, ethAccount: initUser.ethAccount, email:initUser.email})
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res).to.be.an('object');
+          done();
+        });
+    });
+    it('init user account without `ethAccount` fails', (done) => {
+      chai.request(completeURL + '/account')
+        .post('/')
+        .send({name: initUser.name, firebaseToken: initUser.firebaseToken, email:initUser.email})
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res).to.be.an('object');
+          done();
+        });
+    });
+    it('init user account without `firebaseToken` fails', (done) => {
+      chai.request(completeURL + '/account')
+        .post('/')
+        .send({name: initUser.name, ethAccount: initUser.ethAccount, email:initUser.email})
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res).to.be.an('object');
+          done();
+        });
+    });
+  });
+
+  describe('POST /users/:id/account', () => {
+    it('init verified user account', (done) => {
+      chai.request(completeURL + '/account')
+        .post('/')
+        .send(initUser)
+        .end((err, res) => {
+          expect(res).to.have.status(202);
+          expect(res).to.be.an('object');
+          done();
+        });
+    });
+  });
+
+  describe('POST /users/:id/init', () => {
+    it('init created user multiple times fails', (done) => {
+      chai.request(completeURL + '/init')
+        .post('/')
+        .send(initUser)
+        .end((err, res) => {
+          expect(res).to.have.status(404);
+          expect(res).to.be.an('object');
+          done();
+        });
+    });
+  });
+
+  describe('GET /users/:id', () => {
+    it('read created user', (done) => {
+      chai.request(completeURL)
+        .get('/')
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res).to.be.an('object');
+
+          expect(res.body.email).to.equal(user.email);
+          expect(res.body.ethAccount).to.equal(initUser.ethAccount);
+          expect(res.body.firebaseToken).to.equal(initUser.firebaseToken);
+          expect(res.body.name).to.equal(initUser.name);
+          expect(res.body.publicKey).to.equal(initUser.publicKey);
+
+          done();
+        });
+    });
+  });
+
   describe('POST /users/:id', () => {
     it('update created user', (done) => {
       chai.request(completeURL)
@@ -151,10 +237,10 @@ describe('User Tests', () => {
           expect(res).to.be.an('object');
 
           expect(res.body.email).to.equal(user.email);
-          expect(res.body.ethAccount).to.equal(updatedUser.ethAccount);
+          expect(res.body.ethAccount).to.equal(initUser.ethAccount);
           expect(res.body.firebaseToken).to.equal(updatedUser.firebaseToken);
           expect(res.body.name).to.equal(updatedUser.name);
-          expect(res.body.publicKey).to.equal(updatedUser.publicKey);
+          expect(res.body.publicKey).to.equal(initUser.publicKey);
 
           done();
         });
@@ -170,10 +256,10 @@ describe('User Tests', () => {
           expect(res).to.be.an('object');
 
           expect(res.body.email).to.equal(user.email);
-          expect(res.body.ethAccount).to.equal(updatedUser.ethAccount);
+          expect(res.body.ethAccount).to.equal(initUser.ethAccount);
           expect(res.body.firebaseToken).to.equal(updatedUser.firebaseToken);
           expect(res.body.name).to.equal(updatedUser.name);
-          expect(res.body.publicKey).to.equal(updatedUser.publicKey);
+          expect(res.body.publicKey).to.equal(initUser.publicKey);
 
           done();
         });

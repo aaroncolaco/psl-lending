@@ -1,139 +1,65 @@
 'use strict';
 
-const unverifiedUser = require('./unverifiedUserModel');
+const UnverifiedUser = require('./unverifiedUserModel');
 const User = require('./model');
 
 
-const createUser = (attributes, callback) => {
+const createUser = (attributes) => {
   const newUser = User(attributes);
-
-  newUser.save()
-    .then((user) => {
-      return callback(null, newUser);
-    }, (err) => {
-      return callback({"status": 400, "message": "Bad Data", "error": err}, null);
-    });
+  return newUser.save();
 };
 
 
-const deleteUser = (where, callback) => {
-  User.findByIdAndRemove(where)
-    .then((user) => {
-      if (!user) {
-        return callback({"status": 404, "message": "Not found"}, null);
-      }
-      return callback(null, user);
-    })
-    .catch((err) => {
-      return callback({"status": 500, "error": err}, null);
-    });
-};
+const deleteUser = (id) => User.findByIdAndRemove(id);
 
 
-const findUser = (where, callback) => {
-  User.findOne(where)
-    .then((user) => {
-      if (!user) {
-        return callback({"status": 404, "message": "Not found"}, null);
-      }
-      return callback(null, user);
-    })
-    .catch((err) => {
-      return callback({"status": 500, "error": err}, null);
-    });
-};
+const findUser = (where) => User.findOne(where);
 
 
-const searchUsers = (limit, where, callback) => {
-  // limit = limit < 100 ? limit:100;
+const searchUsers = (limit, where) => {
   limit = Math.min(Math.max(limit, 1), 100); // between [0,100] only
 
-  User.find(where)
-    .limit(limit)  // how many to return
-    .sort({ name: 1 })
-    .then((users) => {
-      if (!users) {
-        return callback({"status": 404, "message": "Not found"}, null);
-      }
-      return callback(null, users);
-    })
-    .catch((err) => {
-      return callback({"status": 500, "error": err}, null);
-    });
+  return User.find(where)
+    .limit(limit)
+    .sort({ name: 1 });
 };
 
 
-const updateUser = (where, attributes, callback) => {
-  const id = where.id;
-
-  User.findOne(where)
-    .then((user) => {
+const updateUser = (where, attributes) => {
+  return User.findOne(where)
+    .then(user => {
       if (!user) {
-        return callback({"status": 404, "message": "Not found"}, null);
-      } else {
-        user.update(attributes).then(() => {
-         return callback(null, true);
-        }, (err) => {
-          return callback({"status": 400, "error": "Bad data"}, null);
-        });
+        return Promise.resolve(false);
       }
-    }, (err) => {
-      console.log(err);
-      return callback({"status": 500, "error": err}, null);
+      return user.update(attributes);
+    }, err => {
+      return Promise.reject(err);
     });
 };
 
 
 // unverified Users
-const createUnverifiedUser = (attributes, callback) => {
+const createUnverifiedUser = (attributes) => {
   const where = {
     email: attributes.email
   };
-  findUser(where, (err, verifiedUsers) => {
-    if (err) {
-      console.error(err);
-    }
-    if (!verifiedUsers) {
-      const newUser = unverifiedUser(attributes);
 
-      newUser.save()
-        .then((user) => {
-          return callback(null, newUser);
-        }, (err) => {
-          return callback({"status": 400, "message": "Bad Data", "error": err}, null);
-        });
-    } else {
-      // if already registered, reject
-      return callback({"status": 409, "message": "User Already Registered"}, null);
-    }
-  });
-};
-
-const deleteUnverifiedUsers = (where, callback) => {
-  unverifiedUser.remove(where)
-    .then((removed) => {
-      if (!removed) {
-        return callback({"status": 404, "message": "Not found"}, null);
+  return findUser(where)
+    .then(user => {
+      if (user) {
+        return Promise.resolve(false);
       }
-      return callback(null, removed);
+      const newUser = UnverifiedUser(attributes);
+      return newUser.save();
     })
-    .catch((err) => {
-      return callback({"status": 500, "error": err}, null);
+    .catch(err => {
+      return Promise.reject(err);
     });
 };
 
-const findUnverifiedUser = (where, callback) => {
-  unverifiedUser.findOne(where)
-    .then((user) => {
-      if (!user) {
-        return callback({"status": 404, "message": "Not found"}, null);
-      }
-      return callback(null, user);
-    })
-    .catch((err) => {
-      return callback({"status": 500, "error": err}, null);
-    });
-};
+const deleteUnverifiedUsers = (where) => UnverifiedUser.remove(where);
+
+const findUnverifiedUser = (where) => UnverifiedUser.findOne(where);
 
 
 module.exports = {
