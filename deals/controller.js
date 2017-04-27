@@ -71,7 +71,7 @@ const getAllDeals = (req, res) => {
         return res.json(dealsUserIsPartOf);
       })
       .catch(err => {
-        console.log(err);
+        console.error(err);
         return errorResponse(res, "Something went wrong", err);
       });
   } else {
@@ -94,7 +94,7 @@ const getAllDeals = (req, res) => {
         return res.json(deals);
       })
       .catch(err => {
-        console.log(err);
+        console.error(err);
         return errorResponse(res, "Something went wrong", err);
       });
   }
@@ -113,7 +113,7 @@ const getDealById = (req, res) => {
       return res.json(deal);
     })
     .catch(err => {
-      console.log(err);
+      console.error(err);
       return errorResponse(res, "Something went wrong", err);
     });
 };
@@ -130,14 +130,13 @@ const updateDeal = (req, res) => {
 
   helpers.updateDeal(where, attributes)
     .then(success => {
-      console.log(success);
       if (!success) {
         return errorResponse(res, "Not found", Error("Not found"), 404);
       }
       return res.status(202).json({status: 200, message: "Updated"});
     })
     .catch(err => {
-      console.log(err);
+      console.error(err);
       return errorResponse(res, "Something went wrong", err);
     });
 };

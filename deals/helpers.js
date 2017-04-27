@@ -27,7 +27,7 @@ const searchDeals = (limit, where) => {
 const updateDeal = (where, attributes) => {
 
   return Deal.findOne(where)
-    .then((deal) => {
+    .then(deal => {
       if (!deal) {
         return Promise.resolve(false);
       }
