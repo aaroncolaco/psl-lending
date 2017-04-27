@@ -15,21 +15,6 @@ const web3 = new Web3();
 web3.setProvider(new web3.providers.HttpProvider(config.getGethUrl()));
 const contractInstance = web3.eth.contract(JSON.parse(ABI)).at(address);
 
-// const createContractEvent = contractInstance.acceptContractEvent();
-// createContractEvent.watch((err, result) => {
-//   if (err) {
-//     return logError("createContractEvent", err);
-//   }
-//   console.log(JSON.stringify(result) + "\n");
-//   console.log(JSON.stringify(result.args) + "\n");
-
-//   const { message, userEthAccount } = eventResultToData(result);
-
-//   console.log(`Notification: ${message} \n`);
-
-//   notifyUser("createContractEvent", message, userEthAccount);
-// });
-
 const allEvents = contractInstance.allEvents();
 allEvents.watch((err, result) => {
   if (err) {
@@ -45,63 +30,21 @@ allEvents.watch((err, result) => {
   notifyUser(eventName, message, userEthAccount);
 });
 
-
-// const acceptContractEvent = contractInstance.acceptContractEvent((err, result) => {
-//   if (err) {
-//     return logError("createContractEvent", err);
-//   }
-//   console.log(JSON.stringify(result) + "\n");
-//   console.log(JSON.stringify(result.args) + "\n");
-
-//   const { message, userEthAccount } = eventResultToData(result);
-
-//   console.log(`Notification: ${message} \n`);
-
-//   notifyUser("acceptContractEvent", message, userEthAccount);
-// });
-
-
-// const settleContractEvent = contractInstance.settleContractEvent((err, result) => {
-//   if (err) {
-//     return logError("createContractEvent", err);
-//   }
-//   console.log(JSON.stringify(result) + "\n");
-//   console.log(JSON.stringify(result.args) + "\n");
-
-//   const { message, userEthAccount } = eventResultToData(result);
-
-//   console.log(`Notification: ${message} \n`);
-//   console.log(`Eth Account: ${userEthAccount} \n`);
-//   notifyUser("settleContractEvent", message, userEthAccount);
-// });
-
-
-// const acceptSettleContractEvent = contractInstance.acceptSettleContractEvent((err, result) => {
-//   if (err) {
-//     return logError("createContractEvent", err);
-//   }
-//   console.log(JSON.stringify(result) + "\n");
-//   console.log(JSON.stringify(result.args) + "\n");
-
-//   const { message, userEthAccount } = eventResultToData(result);
-
-//   console.log(`Notification: ${message} \n`);
-
-//   notifyUser("acceptContractEvent", message, userEthAccount);
-// });
-
-
 // helper functions
 const eventResultToData = (eventResult) => {
 
   const eventName = eventResult.event;
 
-  const data = JSON.parse(eventResult.args.data);
+  const argData = JSON.parse(eventResult.args.data);
 
-  const userEthAccount = data.to; // eth account of person to notify
+  const userEthAccount = argData.to; // eth account of person to notify
+
+  const data = {
+    info: JSON.stringify(_.omit(argData, ['to']))
+  };
 
   const message = {
-    data: _.omit(data, ['to'])
+    data
   };
 
   return {
