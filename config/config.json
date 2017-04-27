@@ -4,8 +4,8 @@
     "adminEmailPassword": "AdminEmailPassword",
     "dbString" : "mongodb://mongo/psl-lending",
     "fcmServerKey": "AAAAFLD1P7s:APA91bFjPlN9kTFWfZj7sQFrErn2fefEQX1JGtn1axqgwJVHL1t4j0nBpiauCzJiV1se8EEA7h7ZGoAP13pZJhpOdkOSO-kIzB5Cr53FCiv1kBskcCaJzn1gbyCZj_hcA6LunEAZvZ2T",
-    "url": "http://10.51.229.126:3000",
-    "gethUrl": "http://10.51.229.126:8545"
+    "url": "http://10.51.229.240:3000",
+    "gethUrl": "http://10.51.229.240:8545"
   },
   "development" : {
     "adminEmail": "AdminEmail",
@@ -13,7 +13,7 @@
     "dbString" : "mongodb://10.244.51.109:27017/psl-lending",
     "fcmServerKey": "AAAAFLD1P7s:APA91bFjPlN9kTFWfZj7sQFrErn2fefEQX1JGtn1axqgwJVHL1t4j0nBpiauCzJiV1se8EEA7h7ZGoAP13pZJhpOdkOSO-kIzB5Cr53FCiv1kBskcCaJzn1gbyCZj_hcA6LunEAZvZ2T",
     "url": "http://10.244.51.109:3000",
-    "gethUrl": "http://10.51.229.126:8545"
+    "gethUrl": "http://10.51.229.240:8545"
   },
   "statusMsgs": {
     "202": "Request Accepted",
