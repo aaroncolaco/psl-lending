@@ -18,7 +18,7 @@ const userSchema = new Schema({
     type: String,
     default: ' ',
     required: [true, '{PATH} is required'],
-    trim: true
+    // trim: true
   },
   name: {
     type: String,
