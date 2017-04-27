@@ -75,8 +75,8 @@ Save `_id` so that you can use it to verify account.
 * Response with status code `202` and body:
 ```json
 {
-  status: 202,
-  message: "Created Account"
+  "status": 202,
+  "message": "Created Account"
 }
 ```
 
@@ -102,8 +102,8 @@ Save `_id` so that you can use it to verify account.
 * Response with status code `202` and body:
 ```json
 {
-  status: 202,
-  message: "Updated"
+  "status": 202,
+  "message": "Updated"
 }
 ```
 
