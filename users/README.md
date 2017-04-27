@@ -59,11 +59,10 @@ Save `_id` so that you can use it to verify account.
 
 ---
 
-### Update Profile
-* Send `POST` to `/api/users/:id` with body like
+### Initialize Account
+* Send `POST` to `/api/users/:id/account` with body like
 ```json
 {
-  "email": "aaron_colaco@persistent.co.in",
   "ethAccount": "fsdf79873453jkwhr89342",
   "firebaseToken": "sdfwedsf564sd56f453156sdf1sdf",
   "name": "John Smith",
@@ -76,12 +75,35 @@ Save `_id` so that you can use it to verify account.
 * Response with status code `202` and body:
 ```json
 {
-  "_id": "65f5f04440b37d2a044dd69d",
-  "email": "aaron_colaco@persistent.co.in",
-  "ethAccount": "fsdf79873453jkwhr89342",
+  status: 202,
+  message: "Created Account"
+}
+```
+
+#### Failure
+* Response with status code `400` if bad data
+* Response with status code `404` if not found, or already created account
+* Server error with status code `500`
+
+---
+
+### Update Profile
+* Only `name` and `firebaseToken` can be updated
+* Send `POST` to `/api/users/:id` with body like
+```json
+{
   "firebaseToken": "sdfwedsf564sd56f453156sdf1sdf",
   "name": "John Smith",
-  "publicKey": "asfdihywq789y4r2378462387n6xdz823762378463232werd"
+}
+```
+
+#### Possible Responses
+#### Success
+* Response with status code `202` and body:
+```json
+{
+  status: 202,
+  message: "Updated"
 }
 ```
 

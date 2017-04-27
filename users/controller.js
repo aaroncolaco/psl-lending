@@ -107,7 +107,7 @@ const initUserAccount = (req, res) => {
       if (!success) {
         return errorResponse(res, "Not found", Error("Not found"), 404);
       }
-      return res.status(202).json({ status: 200, message: "Updated" });
+      return res.status(202).json({ status: 202, message: "Created Account" });
     })
     .catch(err => {
       console.error(err);
@@ -134,7 +134,7 @@ const updateUser = (req, res) => {
       if (!success) {
         return errorResponse(res, "Not found", Error("Not found"), 404);
       }
-      return res.status(202).json({ status: 200, message: "Updated" });
+      return res.status(202).json({ status: 202, message: "Updated" });
     })
     .catch(err => {
       console.error(err);
