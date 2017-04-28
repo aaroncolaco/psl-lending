@@ -7,7 +7,7 @@ const serviceAccount = config.getFirebaseServiceAccount();
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://resource-lending.firebaseio.com"
+  databaseURL: "https://lending.firebaseio.com"
 });
 
 const notify = (to, notification) => admin.messaging().sendToDevice(to, notification);
