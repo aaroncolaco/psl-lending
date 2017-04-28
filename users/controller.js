@@ -2,6 +2,7 @@
 
 const _ = require('lodash');
 
+const blockchain = require('../blockchain');
 const helpers = require('./helpers');
 const lib = require('./lib');
 const notifications = require('../notifications');
@@ -74,7 +75,7 @@ const getUsers = (req, res) => {
 // after user is confirmed, init account
 const initUserAccount = (req, res) => {
   // can init user only once
-  // user who hasnt been initialized yet will have `firebaseToken` & `ethAccount` equal ' '
+  // user who hasn't been initialized won't have `firebaseToken` & `ethAccount`
   const where = {
     _id: req.params.id,
     ethAccount: '',
@@ -107,7 +108,15 @@ const initUserAccount = (req, res) => {
       if (!success) {
         return errorResponse(res, "Not found", Error("Not found"), 404);
       }
-      return res.status(202).json({ status: 202, message: "Created Account" });
+
+      return blockchain.seedAccount(attributes.ethAccount.trim())
+        .then(address => {
+          return res.status(202).json({ status: 202, message: "Created Account" });
+        })
+        .catch(err => {
+          console.error(`\nCould not seed account.\n ${err}`);
+          return errorResponse(res, "Could not seed user's Ethereum Account", err);
+        });
     })
     .catch(err => {
       console.error(err);

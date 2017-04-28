@@ -2,6 +2,7 @@
   "production": {
     "adminEmail": "AdminEmail",
     "adminEmailPassword": "AdminEmailPassword",
+    "adminGethAccount": "0x5c4df3271caa4507edf44f39d09302bad8a2f182",
     "dbString" : "mongodb://mongo/psl-lending",
     "fcmServerKey": "AAAAFLD1P7s:APA91bFjPlN9kTFWfZj7sQFrErn2fefEQX1JGtn1axqgwJVHL1t4j0nBpiauCzJiV1se8EEA7h7ZGoAP13pZJhpOdkOSO-kIzB5Cr53FCiv1kBskcCaJzn1gbyCZj_hcA6LunEAZvZ2T",
     "url": "http://10.51.229.240:3000",
@@ -10,6 +11,7 @@
   "development" : {
     "adminEmail": "AdminEmail",
     "adminEmailPassword": "AdminEmailPassword",
+    "adminGethAccount": "0x5c4df3271caa4507edf44f39d09302bad8a2f182",
     "dbString" : "mongodb://10.244.51.109:27017/psl-lending",
     "fcmServerKey": "AAAAFLD1P7s:APA91bFjPlN9kTFWfZj7sQFrErn2fefEQX1JGtn1axqgwJVHL1t4j0nBpiauCzJiV1se8EEA7h7ZGoAP13pZJhpOdkOSO-kIzB5Cr53FCiv1kBskcCaJzn1gbyCZj_hcA6LunEAZvZ2T",
     "url": "http://10.244.51.109:3000",

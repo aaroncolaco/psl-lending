@@ -12,9 +12,11 @@ module.exports = {
   getAdminEmailPassword : () => {
     return process.env.ADMIN_EMAIL_PASSWORD || envtConfig.adminEmailPassword;
   },
-  getEnv: () => {
-    return env;
-  },
+
+  getAdminGethAccount: () => envtConfig.adminGethAccount,
+
+  getEnv: () => env,
+
   getDbConnectionString: () => {
     return process.env.DB_URL || envtConfig.dbString;
   },
@@ -24,13 +26,10 @@ module.exports = {
   getGethUrl: () => {
     return process.env.GETH_URL || envtConfig.gethUrl;
   },
-  getFirebaseServiceAccount: () => {
-    return firebaseServiceAccount;
-  },
-  getStatusMsgs: () => {
-    return config.statusMsgs;
-  },
-  getURL: () => {
-    return envtConfig.url;
-  }
+
+  getFirebaseServiceAccount: () => firebaseServiceAccount,
+
+  getStatusMsgs: () => config.statusMsgs,
+
+  getURL: () => envtConfig.url
 };

@@ -23,16 +23,16 @@ const user = {
 
 const initUser = {
   "email": "aaron_colaco123@persistent.com",
-  "ethAccount": "fsdf79873453jkwhr89342",
-  "firebaseToken": "ashfuidghf23784r698x3534895dsdgfsdg6556df4gdf1346yr72cy9weyrn23479r2348rwee",
+  "ethAccount": "0x3a8e9a5fad5bd914ceb7055a727f0c92a7168bc9",
+  "firebaseToken": "fwuRJg74v7g:APA91bE3GMYUhvRNKZHQCXs4s8NfbmX246e4GOeRS7sk1u2ZGB7NZ89FcffZLfQwo6tpk6_d-mVdemNealVxFc1lxm3bAtqfvt-b4Oe7uLKgdToz5tzIeOD_WSfnblNu4iRcNnMllxKZ",
   "name": "Jane Doe",
   "publicKey": "2387r9n8y249c7rny2347899mxcy934"
 };
 
 const updatedUser = {
   "email": "aaron_colaco765@persistent.com",
-  "ethAccount": "fsdf79873453jkwhr89342fsdfdsfdsf",
-  "firebaseToken": "ashfuidghf23784r698x3534895dsdgfsdg6556df4gdf1346yr72cy9weyrn23479r2348rwee",
+  "ethAccount": "0x3a8e9a5fad5bd914ceb7055a727f0c92a7168bc9fsdfdsfdsf",
+  "firebaseToken": "fwuRJg74v7g:APA91bE3GMYUhvRNKZHQCXs4s8NfbmX246e4GOeRS7sk1u2ZGB7NZ89FcffZLfQwo6tpk6_d-mVdemNealVxFc1lxm3bAtqfvt-b4Oe7uLKgdToz5tzIeOD_WSfnblNu4iRcNnMllxKZ",
   "name": "John Doe",
   "publicKey": "2387r9n8y249cdsfsdfdsfsdf7rny2347899mxcy934"
 };
