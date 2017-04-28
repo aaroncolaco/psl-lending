@@ -42,8 +42,5 @@ jspm_packages
 # temp files
 tmp/
 
-notifications/ABI.txt
-notifications/contractAddress.txt
-
 blockchain/ABI.txt
 blockchain/contractAddress.txt

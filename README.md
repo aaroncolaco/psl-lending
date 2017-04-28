@@ -3,10 +3,10 @@ Service API to lend resources using Ethereum to log events
 
 ## Config
 
-* Create files `notifications/ABI.txt` & `notifications/contractAddress.txt`:
+* Create files `blockchain/ABI.txt` & `blockchain/contractAddress.txt`:
 ```console
-touch notifications/ABI.txt
-touch notifications/contractAddress.txt
+touch blockchain/ABI.txt
+touch blockchain/contractAddress.txt
 ```
 
 * Deploy the contract to peer (if not already done) & paste the ABI and the contract address in files created above.

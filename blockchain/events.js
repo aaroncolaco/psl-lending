@@ -5,7 +5,7 @@ const fs = require('fs');
 const Web3 = require('web3');
 
 const config = require('../config');
-const lib = require('./lib');
+const notifier = require('../notifications');
 const userHelpers = require('../users/helpers');
 
 const ABI = fs.readFileSync(__dirname + "/ABI.txt", "utf8").trim();
@@ -60,7 +60,7 @@ const notifyUser = (eventName, message, userEthAccount) => {
       if (!user) {
         return logError(eventName, Error("Cannot send notification to unknown Ethereum user account: " + userEthAccount));
       }
-      lib.notify(user.firebaseToken, message)
+      notifier.notify(user.firebaseToken, message)
         .then(response => console.log("Then Block: ", JSON.stringify(response)));
     })
     .catch(err => logError(eventName, err));
@@ -70,21 +70,3 @@ const logError = (eventName, error) =>
   console.error("Error in: " + eventName + "\n" + error + "\n\n");
 
 module.exports = {};
-
-// test stuff
-/*
-web3.eth.getBlock(48, function (error, result) {
-  if (!error)
-    console.log(`Get a block: ${JSON.stringify(result)}`);
-  else
-    console.error(error);
-});
-
-const listening = web3.net.listening;
-console.log(`Listening for connections: ${listening}`);
-
-const events = contractInstance.allEvents({fromBlock: 0, toBlock: 'latest'});
-events.watch(function(error, result){
-  console.log(error, result);
-});
-*/
