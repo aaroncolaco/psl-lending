@@ -36,14 +36,13 @@ const eventResultToData = (eventResult) => {
   const eventName = eventResult.event;
 
   const argData = JSON.parse(eventResult.args.data);
+  argData.dealId = eventResult.args.deal_id.toString();
 
   const userEthAccount = argData.to; // eth account of person to notify
 
   const data = {
     info: JSON.stringify(_.omit(argData, ['to']))
   };
-
-  data.dealId = eventResult.args.deal_id;
 
   const message = {
     data
