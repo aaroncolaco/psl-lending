@@ -43,6 +43,8 @@ const eventResultToData = (eventResult) => {
     info: JSON.stringify(_.omit(argData, ['to']))
   };
 
+  data.dealId = eventResult.args.deal_id;
+
   const message = {
     data
   };
