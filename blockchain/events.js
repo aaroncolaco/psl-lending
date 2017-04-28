@@ -41,7 +41,7 @@ const eventResultToData = (eventResult) => {
   const userEthAccount = argData.to; // eth account of person to notify
 
   const data = {
-    info: JSON.stringify(_.omit(argData, ['to']))
+    body: JSON.stringify(_.omit(argData, ['to']))
   };
 
   const message = {
