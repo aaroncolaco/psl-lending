@@ -3,5 +3,5 @@
 const lib = require('./lib');
 
 module.exports = {
-  seedAccount : (toAccount) => lib.seedAccount(toAccount)
+  seedAccount : (amount, toAccount) => lib.seedAccount(amount, toAccount)
 };

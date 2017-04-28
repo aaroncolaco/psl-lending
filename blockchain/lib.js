@@ -13,11 +13,11 @@ const web3 = new Web3();
 web3.setProvider(new web3.providers.HttpProvider(config.getGethUrl()));
 const contractInstance = web3.eth.contract(JSON.parse(ABI)).at(address);
 
-const seedAccount = (toAccount) => {
+const seedAccount = (amount, toAccount) => {
   const data = {
     from: config.getAdminGethAccount(),
     to: toAccount,
-    value: web3.toWei(0.1, "ether") // amount of ether to send converted to wei
+    value: web3.toWei(amount, "ether") // amount of ether to send converted to wei
   };
   return new Promise((resolve, reject) => {
     web3.eth.sendTransaction(data, (err, address) => {

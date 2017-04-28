@@ -83,6 +83,7 @@ const initUserAccount = (req, res) => {
   };
 
   const attributes = {};
+  const seedEthersAmount = 2; // amount to seed account by
 
   // `ethAccount` & `publicKey` are required to init account
   if (!(req.body.hasOwnProperty('ethAccount') && _.isString(req.body.ethAccount))) {
@@ -109,7 +110,7 @@ const initUserAccount = (req, res) => {
         return errorResponse(res, "Not found", Error("Not found"), 404);
       }
 
-      return blockchain.seedAccount(attributes.ethAccount.trim())
+      return blockchain.seedAccount(seedEthersAmount, attributes.ethAccount.trim())
         .then(address => {
           return res.status(202).json({ status: 202, message: "Created Account" });
         })
