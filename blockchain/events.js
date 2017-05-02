@@ -23,11 +23,11 @@ allEvents.watch((err, result) => {
   console.log("Result: ", JSON.stringify(result) + "\n");
   console.log("Result Args: ", JSON.stringify(result.args) + "\n");
 
-  const { eventName, message, userEthAccount } = eventResultToData(result);
+  const { eventName, message, receiverEthAccount } = eventResultToData(result);
 
   console.log(`Notification: ${JSON.stringify(message)} \n`);
 
-  notifyUser(eventName, message, userEthAccount);
+  notifyUser(eventName, message, receiverEthAccount);
 });
 
 // helper functions
@@ -38,28 +38,38 @@ const eventResultToData = (eventResult) => {
   const argData = JSON.parse(eventResult.args.data);
   argData.dealId = eventResult.args.deal_id.toString();
 
-  const userEthAccount = argData.to; // eth account of person to notify
+  const initiatorEthAccount = argData.from;
+  const receiverEthAccount = argData.to;
 
-  const data = {
-    body: JSON.stringify(_.omit(argData, ['to']))
-  };
-
-  const message = {
-    data
-  };
-
-  return {
-    eventName,
-    message,
-    userEthAccount
-  };
-};
-
-const notifyUser = (eventName, message, userEthAccount) => {
-  return userHelpers.findUser({ ethAccount: userEthAccount })
+  return userHelpers.findUser({ ethAccount: initiatorEthAccount })
     .then(user => {
       if (!user) {
-        return logError(eventName, Error("Cannot send notification to unknown Ethereum user account: " + userEthAccount));
+        return logError(eventName, Error("Received notification from unknown Ethereum user account: " + initiatorEthAccount));
+      }
+      argData.initiator = user.email;
+
+      const data = {
+        body: JSON.stringify(_.omit(argData, ['to']))
+      };
+
+      const message = {
+        data
+      };
+
+      return {
+        eventName,
+        message,
+        receiverEthAccount
+      };
+    })
+    .catch(err => logError(eventName, err));
+};
+
+const notifyUser = (eventName, message, receiverEthAccount) => {
+  return userHelpers.findUser({ ethAccount: receiverEthAccount })
+    .then(user => {
+      if (!user) {
+        return logError(eventName, Error("Cannot send notification to unknown Ethereum user account: " + receiverEthAccount));
       }
       notifier.notify(user.firebaseToken, message)
         .then(response => console.log("Then Block: ", JSON.stringify(response)));
