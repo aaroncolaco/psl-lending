@@ -43,6 +43,7 @@ const eventResultToData = (eventResult) => {
   const senderEthAccount = argData.from;
 
   argData.transactionHash = eventResult.transactionHash;
+  argData.status = eventName;
 
   return userHelpers.findUser({ ethAccount: senderEthAccount })
     .then(user => {
