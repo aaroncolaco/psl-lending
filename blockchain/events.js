@@ -51,7 +51,7 @@ const eventResultToData = (eventResult) => {
         return Promise.reject(Error("Cannot find sender Ethereum user account: " + senderEthAccount));
       }
 
-      argData.invoker = user._id;
+      argData.invoker = user.email;
 
       const data = {
         body: JSON.stringify(_.omit(argData, ['to']))
