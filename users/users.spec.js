@@ -24,7 +24,7 @@ const user = {
 
 const initUser = {
   "email": "aaron_colaco123@persistent.com",
-  "ethAccount": "0x3a8e9a5fad5bd914ceb7055a727f0c92a7168bc9",
+  "ethAccount": "0x54ab617553e808286bab2483e92203bc7e9afaa9",
   "firebaseToken": "fwuRJg74v7g:APA91bE3GMYUhvRNKZHQCXs4s8NfbmX246e4GOeRS7sk1u2ZGB7NZ89FcffZLfQwo6tpk6_d-mVdemNealVxFc1lxm3bAtqfvt-b4Oe7uLKgdToz5tzIeOD_WSfnblNu4iRcNnMllxKZ",
   "name": "Jane Doe",
   "publicKey": "2387r9n8y249c7rny2347899mxcy934"
@@ -32,7 +32,7 @@ const initUser = {
 
 const updatedUser = {
   "email": "aaron_colaco765@persistent.com",
-  "ethAccount": "0x3a8e9a5fad5bd914ceb7055a727f0c92a7168bc9fsdfdsfdsf",
+  "ethAccount": "0x54ab617553e808286bab2483e92203bc7e9afaa9fsdfdsfdsf",
   "firebaseToken": "fwuRJg74v7g:APA91bE3GMYUhvRNKZHQCXs4s8NfbmX246e4GOeRS7sk1u2ZGB7NZ89FcffZLfQwo6tpk6_d-mVdemNealVxFc1lxm3bAtqfvt-b4Oe7uLKgdToz5tzIeOD_WSfnblNu4iRcNnMllxKZ",
   "name": "John Doe",
   "publicKey": "2387r9n8y249cdsfsdfdsfsdf7rny2347899mxcy934"
