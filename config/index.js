@@ -23,6 +23,9 @@ module.exports = {
   getFcmServerKey: () => {
     return process.env.FCM_SERVER_KEY || envtConfig.fcmServerKey;
   },
+  getGcmApiKey: () => {
+    return process.env.GCM_API_KEY || envtConfig.gcmApiKey;
+  },
   getGethUrl: () => {
     return process.env.GETH_URL || envtConfig.gethUrl;
   },
