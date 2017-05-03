@@ -81,7 +81,7 @@ const notifyUser = (eventName, message, receiverEthAccount) => {
       if (!user) {
         return logError(eventName, Error("Cannot send notification to unknown Ethereum user account: " + receiverEthAccount));
       }
-      notifier.notify(user.firebaseToken, message)
+      notifier.gcmMesage(user.firebaseToken, message)
         .then(response => console.log("Then Block: ", JSON.stringify(response)));
     })
     .catch(err => logError(eventName, err));
