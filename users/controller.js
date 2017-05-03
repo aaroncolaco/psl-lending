@@ -53,7 +53,7 @@ const getUsers = (req, res) => {
     where.name = new RegExp(req.query.name.trim(), 'i');
   }
   if (req.query.hasOwnProperty('email') && _.isString(req.query.email)) {
-    where.email = new RegExp(req.query.email.trim(), 'i');
+    where.email = new RegExp('\^' + req.query.email.trim(), 'i');
   }
   if (req.query.hasOwnProperty('limit') && _.isInteger(parseInt(req.query.limit))) {
     limit = parseInt(req.query.limit);
