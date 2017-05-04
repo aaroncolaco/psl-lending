@@ -39,8 +39,10 @@ jspm_packages
 # Mac "Desktop Services Store"
 .DS_Store
 
+dist/
+
 # temp files
 tmp/
 
-blockchain/ABI.txt
-blockchain/contractAddress.txt
+ABI.txt
+contractAddress.txt

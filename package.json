@@ -3,8 +3,11 @@
   "version": "0.8.0",
   "private": true,
   "scripts": {
+    "build": "gulp scripts statics",
+    "pretest": "npm run build",
     "start": "node ./bin/www",
-    "test": "mocha **/*.spec.js --timeout 10000"
+    "test": "mocha dist/**/*.spec.js --timeout 10000",
+    "watch": "nodemon ./src/bin/www"
   },
   "dependencies": {
     "body-parser": "~1.16.0",
@@ -35,6 +38,8 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "chai-http": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-strip-comments": "^2.4.5",
     "mocha": "^3.2.0"
   },
   "repository": {

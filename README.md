@@ -3,31 +3,37 @@ Service API to lend resources using Ethereum to log events
 
 ## Config
 
-* Create files `blockchain/ABI.txt` & `blockchain/contractAddress.txt`:
+* Create files `src/blockchain/ABI.txt` & `src/blockchain/contractAddress.txt`:
 ```console
-touch blockchain/ABI.txt
-touch blockchain/contractAddress.txt
+touch src/blockchain/ABI.txt
+touch src/blockchain/contractAddress.txt
 ```
 
 * Deploy the contract to peer (if not already done) & paste the ABI and the contract address in files created above.
   * ABI and contract address change after every deployment. If not updated accordingly, events will not be logged.
 
-* Update `config/config.json` with values as per your configuration. Make sure you change the `gethUrl` to the IP where your geth client is running.
-* Create a Firebase project and update `config/firebase-admin.json`.
+* Update `src/config/config.json` with values as per your configuration. Make sure you change the `gethUrl` to the IP where your geth client is running.
+* Create a Firebase project and update `src/config/firebase-admin.json`.
 
 ## Deploying via Docker
 * Install [docker](https://docs.docker.com/engine/installation/) and [docker-compose](https://docs.docker.com/compose/install/) based on your platform.
 
-* Set values for `ADMIN_EMAIL` and `ADMIN_EMAIL_PASSWORD` in Dockerfile. If not set/removed, will use values in `config.json`
+* Set values for `ADMIN_EMAIL` and `ADMIN_EMAIL_PASSWORD` in Dockerfile. If not set/removed, will use values in `src/config.json`
+
+* Build dist folder using gulp
+```console
+npm install --only=dev
+gulp
+```
 
 * Run docker container:
 ```console
-docker-compose up --build
+docker-compose up --build -d
 ```
 
 * App will run on port `3000` by default.
 
-* Running via docker will set environment to `production`. So, production config values from `config/config.json` will be used.
+* Running via docker will set environment to `production`. So, production config values from `src/config/config.json` will be used.
   * Environment can be changed to `development` in the Dockerfile.
 
 ## Deploying normally
@@ -43,6 +49,7 @@ export NODE_ENV=production
 npm install
 npm start
 ```
+Note: Change `start` tag in `package.json` to `node src/bin/www`
 
 * App will run on port `3000` by default.
 
