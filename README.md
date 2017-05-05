@@ -15,18 +15,14 @@ touch src/blockchain/contractAddress.txt
 * Update `src/config/config.json` with values as per your configuration. Make sure you change the `gethUrl` to the IP where your geth client is running.
 * Create a Firebase project and update `src/config/firebase-admin.json`.
 
+---
+
 ## Deploying via Docker
 * Install [docker](https://docs.docker.com/engine/installation/) and [docker-compose](https://docs.docker.com/compose/install/) based on your platform.
 
-* Set values for `ADMIN_EMAIL` and `ADMIN_EMAIL_PASSWORD` in Dockerfile. If not set/removed, will use values in `src/config.json`
+* Set values for `ADMIN_EMAIL` and `ADMIN_EMAIL_PASSWORD` in Dockerfile. If no envt variables, will use values in `src/config/config.json`
 
-* Build dist folder using gulp
-```console
-npm install --only=dev
-gulp
-```
-
-* Run docker container:
+* Run docker compose:
 ```console
 docker-compose up --build -d
 ```
@@ -36,6 +32,8 @@ docker-compose up --build -d
 * Running via docker will set environment to `production`. So, production config values from `src/config/config.json` will be used.
   * Environment can be changed to `development` in the Dockerfile.
 
+---
+
 ## Deploying normally
 * Install `node v6.10.2` and `npm v4.4.4`.
 
@@ -44,13 +42,17 @@ docker-compose up --build -d
 export NODE_ENV=production
 ```
 
-* Install modules and run:
+* Install gulp and dependencies:
 ```console
+npm install -g gulp-cli
 npm install
+```
+
+* Build and start:
+```console
+gulp
 npm start
 ```
-Note: Change `start` tag in `package.json` to `node src/bin/www`
-
 * App will run on port `3000` by default.
 
 ## Testing REST API
