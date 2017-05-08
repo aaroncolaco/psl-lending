@@ -38,7 +38,7 @@ const getUserById = (req, res) => {
     })
     .catch(err => {
       console.error(err);
-      return errorResponse(res, "Could not delete User", err);
+      return errorResponse(res, "Could not find User", err);
     });
 };
 
@@ -68,7 +68,7 @@ const getUsers = (req, res) => {
     })
     .catch(err => {
       console.error(err);
-      return errorResponse(res, "Could not delete User", err);
+      return errorResponse(res, "Could not get Users", err);
     });
 };
 
@@ -121,7 +121,7 @@ const initUserAccount = (req, res) => {
     })
     .catch(err => {
       console.error(err);
-      return errorResponse(res, "Could not delete User", err);
+      return errorResponse(res, "Could not update User account", err);
     });
 };
 
@@ -148,7 +148,7 @@ const updateUser = (req, res) => {
     })
     .catch(err => {
       console.error(err);
-      return errorResponse(res, "Could not delete User", err);
+      return errorResponse(res, "Could not update User", err);
     });
 };
 
