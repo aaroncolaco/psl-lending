@@ -58,7 +58,8 @@ const eventResultToData = (eventResult) => {
           info: JSON.stringify(_.omit(argData, ['to']))
         },
         body: argData.dealId,
-        title: user.email + ' - ' + eventName
+        title: user.email + ' - ' + eventName,
+        "content-available": "1"
       };
 
       const message = {
