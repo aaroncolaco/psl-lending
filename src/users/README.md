@@ -111,3 +111,45 @@ Save `_id` so that you can use it to verify account.
 * Response with status code `400` if bad data
 * Response with status code `404` if not found
 * Server error with status code `500`
+
+---
+
+### Search Users
+
+* Send `GET` to `/api/users`.
+
+* Possible query params:
+  - `name` : RegEx search
+  - `email` : prestring search
+  - `ethAccount` : exact match
+  - `limit` : number of results to return. Default `10`, max `100`
+
+#### Possible Responses
+#### Success
+* Response with status code `200` and array containing users:
+* Empty array if no users found
+
+#### Failure
+* Server error with status code `500`
+
+ ---
+
+ ### Get User by ID
+
+* Send `GET` to `/api/users/:id`.
+
+#### Possible Responses
+#### Success
+* Response with status code `200` and body:
+```json
+  "_id": "23874xd923847xcn98mxc89xcm8423",
+  "email": "aaron_colaco123@persistent.com",
+  "ethAccount": "0x54ab617553e808286bab2483e92203bc7e9afaa9",
+  "firebaseToken": "fwuRJg74v7g:APA91bE3GMYUhvRNKZHQCXs4s8NfbmX246e4GOeRS7sk1u2ZGB7NZ89FcffZLfQwo6tpk6_d-mVdemNealVxFc1lxm3bAtqfvt-b4Oe7uLKgdToz5tzIeOD_WSfnblNu4iRcNnMllxKZ",
+  "name": "Jane Doe",
+  "publicKey": "2387r9n8y249c7rny2347899mxcy934"
+```
+
+#### Failure
+* Response with status code `404` if not found
+* Server error with status code `500`
