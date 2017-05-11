@@ -16,12 +16,20 @@ web3.setProvider(new web3.providers.HttpProvider(config.getGethUrl()));
 const contractInstance = web3.eth.contract(JSON.parse(ABI)).at(address);
 console.log(contractInstance);
 
-const eventMessages = {
+const eventBodyMessages = {
   acceptContractEvent: " accepted your deal",
   acceptSettleContractEvent: " agreed to settle your deal",
   createContractEvent: " wants to create a deal",
   settleContractEvent: " wants to settle your deal",
   rejectContractEvent: " rejected your deal"
+};
+
+const eventTitleMessages = {
+  acceptContractEvent: "Deal Accepted",
+  acceptSettleContractEvent: "Deal Settled",
+  createContractEvent: "New Deal",
+  settleContractEvent: "Settle Deal?",
+  rejectContractEvent: "Deal Rejected"
 };
 
 const allEvents = contractInstance.allEvents();
@@ -66,8 +74,8 @@ const eventResultToData = (eventResult) => {
         additionalData: {
           info: JSON.stringify(_.omit(argData, ['to']))
         },
-        body: user.name + eventMessages[eventName],
-        title: user.name + ' - ' + user.email,
+        body: user.name + eventBodyMessages[eventName],
+        title: eventTitleMessages[eventName],
         "content-available": "1",
         icon: "ic_launcher"
       };
