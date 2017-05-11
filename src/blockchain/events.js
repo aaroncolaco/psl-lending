@@ -14,7 +14,6 @@ const address = fs.readFileSync(__dirname + "/contractAddress.txt", "utf8").trim
 const web3 = new Web3();
 web3.setProvider(new web3.providers.HttpProvider(config.getGethUrl()));
 const contractInstance = web3.eth.contract(JSON.parse(ABI)).at(address);
-console.log(contractInstance);
 
 const eventBodyMessages = {
   acceptContractEvent: " accepted your deal",
