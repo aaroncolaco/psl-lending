@@ -14,6 +14,15 @@ const address = fs.readFileSync(__dirname + "/contractAddress.txt", "utf8").trim
 const web3 = new Web3();
 web3.setProvider(new web3.providers.HttpProvider(config.getGethUrl()));
 const contractInstance = web3.eth.contract(JSON.parse(ABI)).at(address);
+console.log(contractInstance);
+
+const eventMessages = {
+  acceptContractEvent: " accepted your deal",
+  acceptSettleContractEvent: " agreed to settle your deal",
+  createContractEvent: " wants to create a deal",
+  settleContractEvent: " wants to settle your deal",
+  rejectContractEvent: " rejected your deal"
+};
 
 const allEvents = contractInstance.allEvents();
 allEvents.watch((err, result) => {
@@ -57,9 +66,10 @@ const eventResultToData = (eventResult) => {
         additionalData: {
           info: JSON.stringify(_.omit(argData, ['to']))
         },
-        body: argData.dealId + ' : ' +  eventName.split(new RegExp('[A-Z]'))[0] + ' deal',
+        body: user.name + eventMessages[eventName],
         title: user.name + ' - ' + user.email,
-        "content-available": "1"
+        "content-available": "1",
+        icon: "ic_launcher"
       };
 
       const message = {
