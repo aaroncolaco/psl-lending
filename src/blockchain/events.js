@@ -76,7 +76,8 @@ const eventResultToData = (eventResult) => {
         body: user.name + eventBodyMessages[eventName],
         title: eventTitleMessages[eventName],
         "content-available": "1",
-        icon: "ic_launcher"
+        icon: "ic_launcher",
+        image: "www/img/icon.png"
       };
 
       const message = {
