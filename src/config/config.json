@@ -2,7 +2,7 @@
   "production": {
     "adminEmail": "AdminEmail",
     "adminEmailPassword": "AdminEmailPassword",
-    "adminGethAccount": "0x349c21a1716aed8f2cd4e7f9dce241c99227eb5f",
+    "adminGethAccount": "0xbec15d47d475366d781e44d77b7b0fa9819e3ceb",
     "dbString" : "mongodb://mongo/psl-lending",
     "fcmServerKey": "AAAAFLD1P7s:APA91bFjPlN9kTFWfZj7sQFrErn2fefEQX1JGtn1axqgwJVHL1t4j0nBpiauCzJiV1se8EEA7h7ZGoAP13pZJhpOdkOSO-kIzB5Cr53FCiv1kBskcCaJzn1gbyCZj_hcA6LunEAZvZ2T",
     "gcmApiKey": "AAAA-yR1ViU:APA91bE4vgG-FGMxmNx5z7qkn3SHnEq9aDChn-gQI3ydUEZygy47jkKF3AgVwlv5WxUjQMUo99lwBtn0i7GDpTNRv-sKk5IBJytoMRuepMD8mKb2lpHyHVLPZ8OCFmJ5vK6OBUTwNnhq",
@@ -12,7 +12,7 @@
   "development" : {
     "adminEmail": "AdminEmail",
     "adminEmailPassword": "AdminEmailPassword",
-    "adminGethAccount": "0x349c21a1716aed8f2cd4e7f9dce241c99227eb5f",
+    "adminGethAccount": "0xbec15d47d475366d781e44d77b7b0fa9819e3ceb",
     "dbString" : "mongodb://10.244.51.109:27017/psl-lending",
     "fcmServerKey": "AAAAFLD1P7s:APA91bFjPlN9kTFWfZj7sQFrErn2fefEQX1JGtn1axqgwJVHL1t4j0nBpiauCzJiV1se8EEA7h7ZGoAP13pZJhpOdkOSO-kIzB5Cr53FCiv1kBskcCaJzn1gbyCZj_hcA6LunEAZvZ2T",
     "gcmApiKey": "AAAA-yR1ViU:APA91bE4vgG-FGMxmNx5z7qkn3SHnEq9aDChn-gQI3ydUEZygy47jkKF3AgVwlv5WxUjQMUo99lwBtn0i7GDpTNRv-sKk5IBJytoMRuepMD8mKb2lpHyHVLPZ8OCFmJ5vK6OBUTwNnhq",
