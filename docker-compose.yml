@@ -9,6 +9,6 @@ services:
   mongo:
     image: mongo
     volumes:
-      - /data/mongodb/db:/data/db
+      - /data/mongodb/pslLending:/data/db
     ports:
       - "27019:27017"
