@@ -22,6 +22,14 @@ pipeline {
           }
         }
 
+        stage('build - create dist directory') {
+            steps {
+              timeout(time: 5, unit: 'MINUTES') {
+                sh 'npm run build'
+              }
+            }
+        }
+
 
         stage('build & test') {
             steps {
