@@ -21,17 +21,19 @@ pipeline {
         }
 
 
-        withCredentials([usernamePassword(credentialsId: 'ADMIN_EMAIL_CREDS', passwordVariable: 'emailPassword', usernameVariable: 'emailAddress')]) {
-          stage('build & test') {
+        stage('build & test') {
             steps {
+              withCredentials([usernamePassword(credentialsId: 'ADMIN_EMAIL_CREDS', passwordVariable: 'emailPassword', usernameVariable: 'emailAddress')]) {
                 timeout(time: 5, unit: 'MINUTES') {
-                    sh '''
-                    ADMIN_EMAIL_PASSWORD=${emailPassword} ADMIN_EMAIL=${emailAddress} npm test
-                    '''
+                          sh '''
+                          ADMIN_EMAIL_PASSWORD=${emailPassword} ADMIN_EMAIL=${emailAddress} npm test
+                          '''
                 }
             }
+          }
+
         }
-        }
+
     }
 
     post {
