@@ -1,11 +1,25 @@
 pipeline {
     agent { docker 'node:6.3' }
+
+    environment {
+        NODE_ENV = 'jenkins'
+        DB_ENGINE    = 'sqlite'
+        ADMIN_EMAIL_PASSWORD = env.ADMIN_EMAIL_PASSWORD
+        ADMIN_EMAIL = env.ADMIN_EMAIL
+    }
+
     stages {
         stage('install npm modules') {
             steps {
                 timeout(time: 5, unit: 'MINUTES') {
                     sh 'npm install'
                 }
+            }
+        }
+
+        stage('create files') {
+            steps {
+                sh 'bash createFiles.sh'
             }
         }
 
