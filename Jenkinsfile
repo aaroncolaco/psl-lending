@@ -2,36 +2,33 @@ pipeline {
     agent { docker 'node:6.3' }
 
     environment {
-        NODE_ENV = 'jenkins'
+      NODE_ENV = 'jenkins'
+      ADMIN_EMAIL_PASSWORD = "${ADMIN_EMAIL_PASSWORD}"
+      ADMIN_EMAIL = "${ADMIN_EMAIL}"
     }
 
     stages {
-        stage('install npm modules') {
-            steps {
-                timeout(time: 5, unit: 'MINUTES') {
-                    sh 'npm install'
-                }
-            }
+      stage('install npm modules') {
+        steps {
+          timeout(time: 5, unit: 'MINUTES') {
+            sh 'npm install'
+          }
         }
+      }
 
         stage('create files') {
-            steps {
-                sh 'bash createFiles.sh'
-            }
+          steps {
+            sh 'bash createFiles.sh'
+          }
         }
 
 
         stage('build & test') {
             steps {
-              withCredentials([usernamePassword(credentialsId: 'ADMIN_EMAIL_CREDS', passwordVariable: 'emailPassword', usernameVariable: 'emailAddress')]) {
-                timeout(time: 5, unit: 'MINUTES') {
-                          sh '''
-                          ADMIN_EMAIL_PASSWORD=${emailPassword} ADMIN_EMAIL=${emailAddress} npm test
-                          '''
-                }
+              timeout(time: 5, unit: 'MINUTES') {
+                sh 'npm test'
+              }
             }
-          }
-
         }
 
     }
