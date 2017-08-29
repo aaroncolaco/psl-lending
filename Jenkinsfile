@@ -3,9 +3,6 @@ pipeline {
 
     environment {
         NODE_ENV = 'jenkins'
-        DB_ENGINE    = 'sqlite'
-        ADMIN_EMAIL_PASSWORD = env.ADMIN_EMAIL_PASSWORD
-        ADMIN_EMAIL = env.ADMIN_EMAIL
     }
 
     stages {
@@ -23,12 +20,17 @@ pipeline {
             }
         }
 
-        stage('build & test') {
+
+        withCredentials([usernamePassword(credentialsId: 'ADMIN_EMAIL_CREDS', passwordVariable: 'emailPassword', usernameVariable: 'emailAddress')]) {
+          stage('build & test') {
             steps {
                 timeout(time: 5, unit: 'MINUTES') {
-                    sh 'npm test'
+                    sh '''
+                    ADMIN_EMAIL_PASSWORD=${emailPassword} ADMIN_EMAIL=${emailAddress} npm test
+                    '''
                 }
             }
+        }
         }
     }
 
