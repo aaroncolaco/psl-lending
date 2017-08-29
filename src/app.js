@@ -21,7 +21,7 @@ app.use(cookieParser());
 
 /*Mongoose promises are depreciated. Hence, plug in native promises*/
 mongoose.Promise = global.Promise;
-mongoose.connect(config.getDbConnectionString(), function(err) {
+mongoose.connect(config.getDbConnectionString(), {useMongoClient: true}, function(err) {
   // Info
   console.log('Environment: ' + config.getEnv());
   console.log('MongoDB: ' + config.getDbConnectionString());
