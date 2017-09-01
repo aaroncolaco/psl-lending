@@ -30,25 +30,13 @@ pipeline {
             }
         }
 
-
-        stage('start') {
-            steps {
-                sh 'npm start'
-            }
-        }
-
         stage('test') {
             steps {
+              timeout(time: 5, unit: 'MINUTES') {
                 sh 'npm test'
+              }
             }
         }
-
-        stage('stop') {
-            steps {
-                sh 'killall node'
-            }
-        }
-
     }
 
     post {
