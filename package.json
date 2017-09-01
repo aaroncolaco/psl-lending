@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "build": "gulp scripts statics",
-    "pretest": "npm run build",
     "start": "node ./dist/bin/www",
     "test": "mocha dist/**/*.spec.js --timeout 10000",
     "watch": "nodemon ./src/bin/www"

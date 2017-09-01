@@ -6,7 +6,6 @@ const expect = chai.expect;
 
 chai.use(chaiHttp);
 
-const bin = require('../bin/www');
 const config = require('../config');
 
 const hostURL = config.getURL();

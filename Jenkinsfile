@@ -22,7 +22,7 @@ pipeline {
           }
         }
 
-        stage('build - create dist directory') {
+        stage('build') {
             steps {
               timeout(time: 5, unit: 'MINUTES') {
                 sh 'npm run build'
@@ -31,11 +31,21 @@ pipeline {
         }
 
 
-        stage('build & test') {
+        stage('start') {
             steps {
-              timeout(time: 5, unit: 'MINUTES') {
+                sh 'npm start'
+            }
+        }
+
+        stage('test') {
+            steps {
                 sh 'npm test'
-              }
+            }
+        }
+
+        stage('stop') {
+            steps {
+                sh 'killall node'
             }
         }
 
